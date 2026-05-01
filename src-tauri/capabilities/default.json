@@ -1,0 +1,88 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Capabilities granted to the main window. Scoped tightly: fs is restricted to the user's selected workspace, shell to a curated allow-list, and dialog/clipboard to user-initiated calls.",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "core:window:default",
+    "core:window:allow-set-title",
+    "core:window:allow-set-resizable",
+    "core:window:allow-show",
+    "core:window:allow-hide",
+    "core:window:allow-set-focus",
+    "core:window:allow-minimize",
+    "core:window:allow-unminimize",
+    "core:window:allow-set-fullscreen",
+    "core:event:default",
+    "core:webview:default",
+    "core:app:default",
+
+    "fs:default",
+    "fs:allow-read-text-file",
+    "fs:allow-write-text-file",
+    "fs:allow-read-dir",
+    "fs:allow-exists",
+    {
+      "identifier": "fs:scope",
+      "allow": [
+        { "path": "$HOME/**" },
+        { "path": "$DOCUMENT/**" },
+        { "path": "$DOWNLOAD/**" },
+        { "path": "$DESKTOP/**" }
+      ],
+      "deny": [
+        { "path": "$HOME/.ssh/**" },
+        { "path": "$HOME/.aws/**" },
+        { "path": "$HOME/Library/Keychains/**" }
+      ]
+    },
+
+    "dialog:default",
+    "dialog:allow-open",
+    "dialog:allow-save",
+    "dialog:allow-message",
+    "dialog:allow-ask",
+    "dialog:allow-confirm",
+
+    {
+      "identifier": "shell:allow-execute",
+      "allow": [
+        { "name": "git", "cmd": "git", "args": true },
+        { "name": "node", "cmd": "node", "args": true },
+        { "name": "npm", "cmd": "npm", "args": true },
+        { "name": "pnpm", "cmd": "pnpm", "args": true },
+        { "name": "yarn", "cmd": "yarn", "args": true }
+      ]
+    },
+    "shell:allow-open",
+
+    "clipboard-manager:allow-read-text",
+    "clipboard-manager:allow-write-text",
+
+    "notification:default",
+    "notification:allow-notify",
+    "notification:allow-request-permission",
+    "notification:allow-is-permission-granted",
+
+    "os:default",
+    "os:allow-platform",
+    "os:allow-version",
+    "os:allow-arch",
+
+    "process:default",
+    "process:allow-restart",
+    "process:allow-exit",
+
+    "global-shortcut:default",
+    "global-shortcut:allow-register",
+    "global-shortcut:allow-unregister",
+    "global-shortcut:allow-is-registered",
+
+    "deep-link:default",
+    "updater:default",
+    "log:default",
+    "positioner:default",
+    "autostart:default"
+  ]
+}

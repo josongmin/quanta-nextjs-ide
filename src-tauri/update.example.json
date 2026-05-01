@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schema.tauri.app/updater.json",
+  "_comment": "Example shape of releases.quanta.dev/{target}/{current_version}. Host this JSON behind the URL configured in tauri.conf.json's plugins.updater.endpoints. Tauri's updater fetches it on launch and every 6 hours.",
+
+  "version": "0.0.2",
+  "notes": "Bug fixes and probe parser improvements.",
+  "pub_date": "2026-05-15T12:00:00Z",
+
+  "platforms": {
+    "darwin-aarch64": {
+      "signature": "<paste output of `tauri signer sign Quanta.app.tar.gz`>",
+      "url": "https://releases.quanta.dev/darwin-aarch64/Quanta-0.0.2.app.tar.gz"
+    },
+    "darwin-x86_64": {
+      "signature": "<paste output of `tauri signer sign Quanta.app.tar.gz`>",
+      "url": "https://releases.quanta.dev/darwin-x86_64/Quanta-0.0.2.app.tar.gz"
+    },
+    "darwin-universal": {
+      "signature": "<paste output of `tauri signer sign Quanta.app.tar.gz`>",
+      "url": "https://releases.quanta.dev/darwin-universal/Quanta-0.0.2.app.tar.gz"
+    }
+  }
+}

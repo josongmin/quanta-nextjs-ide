@@ -1,0 +1,97 @@
+{
+  "$schema": "https://schema.tauri.app/config/2.0",
+  "productName": "Quanta",
+  "version": "0.0.1",
+  "identifier": "dev.quanta.ide",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build",
+    "devUrl": "http://localhost:5173",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Quanta",
+        "width": 1440,
+        "height": 900,
+        "minWidth": 1100,
+        "minHeight": 700,
+        "resizable": true,
+        "fullscreen": false,
+        "decorations": true,
+        "transparent": true,
+        "titleBarStyle": "Overlay",
+        "hiddenTitle": true,
+        "trafficLightPosition": { "x": 18, "y": 22 },
+        "windowEffects": {
+          "effects": ["hudWindow"],
+          "state": "active",
+          "radius": 12
+        },
+        "acceptFirstMouse": true,
+        "tabbingIdentifier": "dev.quanta.main",
+        "shadow": true,
+        "visible": false,
+        "focus": true
+      }
+    ],
+    "macOSPrivateApi": true,
+    "security": {
+      "csp": null,
+      "capabilities": ["default", "macos-extras"]
+    },
+    "trayIcon": {
+      "id": "main",
+      "iconPath": "icons/tray-icon.png",
+      "iconAsTemplate": true,
+      "tooltip": "Quanta — Probe ready"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["app", "dmg", "updater"],
+    "category": "DeveloperTool",
+    "shortDescription": "Next.js full-stack IDE with RSC Probe + AI",
+    "longDescription": "Quanta is a desktop IDE for Next.js apps. It captures live RSC payloads (Probe), combines them with AST analysis, and surfaces ground-truth client/server boundaries. AI assistant has Probe + AST as live context. Built natively for macOS with Apple Silicon support.",
+    "copyright": "© 2026 Quanta Authors",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "macOS": {
+      "frameworks": [],
+      "minimumSystemVersion": "12.0",
+      "exceptionDomain": "",
+      "signingIdentity": null,
+      "providerShortName": null,
+      "entitlements": "entitlements.plist",
+      "dmg": {
+        "background": null,
+        "windowSize": { "width": 660, "height": 400 },
+        "appPosition": { "x": 180, "y": 170 },
+        "applicationFolderPosition": { "x": 480, "y": 170 }
+      }
+    },
+    "createUpdaterArtifacts": true
+  },
+  "plugins": {
+    "updater": {
+      "active": true,
+      "endpoints": [
+        "https://releases.quanta.dev/{{target}}/{{current_version}}"
+      ],
+      "dialog": false,
+      "pubkey": ""
+    },
+    "deep-link": {
+      "desktop": {
+        "schemes": ["quanta"]
+      }
+    }
+  }
+}

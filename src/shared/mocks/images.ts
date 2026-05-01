@@ -1,0 +1,48 @@
+import type { ImageEntry } from '@shared/types';
+
+const i = (
+  id: string,
+  src: string,
+  file: string,
+  line: number,
+  format: ImageEntry['format'],
+  recommendedFormat: ImageEntry['recommendedFormat'],
+  widthHint: number,
+  lazy: boolean,
+  hasSrcSet: boolean,
+  estSavingsKb: number,
+): ImageEntry => ({
+  id,
+  src,
+  file,
+  line,
+  format,
+  recommendedFormat,
+  widthHint,
+  lazy,
+  hasSrcSet,
+  estSavingsKb,
+});
+
+export const mockImages: ImageEntry[] = [
+  i('img_1', '/img/hero.jpg', 'app/page.tsx', 22, 'jpeg', 'avif', 1920, false, false, 320),
+  i('img_2', '/img/p-1.jpg', 'app/(shop)/products/page.tsx', 38, 'jpeg', 'webp', 800, false, false, 180),
+  i('img_3', '/img/p-2.jpg', 'app/(shop)/products/page.tsx', 39, 'jpeg', 'webp', 800, false, false, 165),
+  i('img_4', '/img/p-3.jpg', 'app/(shop)/products/page.tsx', 40, 'jpeg', 'webp', 800, true, false, 160),
+  i('img_5', '/img/avatar.png', 'components/Avatar.tsx', 14, 'png', 'webp', 96, true, false, 18),
+  i('img_6', '/img/og-cover.png', 'app/blog/[slug]/page.tsx', 12, 'png', 'avif', 1200, false, false, 84),
+  i('img_7', '/img/cart-bg.gif', 'app/(shop)/cart/page.tsx', 18, 'gif', 'webp', 600, true, false, 92),
+  i('img_8', '/img/checkout-banner.png', 'app/(shop)/checkout/page.tsx', 24, 'png', 'avif', 1280, false, false, 110),
+  i('img_9', '/img/dash-thumb-1.jpg', 'app/dashboard/widgets/Stats.client.tsx', 32, 'jpeg', 'avif', 480, false, true, 64),
+  i('img_10', '/img/dash-thumb-2.jpg', 'app/dashboard/widgets/Stats.client.tsx', 33, 'jpeg', 'avif', 480, false, true, 60),
+  i('img_11', '/img/admin-empty.svg', 'app/admin/empty.tsx', 6, 'svg', 'svg', 256, true, false, 0),
+  i('img_12', '/img/blog-1.jpg', 'app/blog/page.tsx', 28, 'jpeg', 'webp', 720, true, true, 48),
+  i('img_13', '/img/blog-2.jpg', 'app/blog/page.tsx', 36, 'jpeg', 'webp', 720, true, false, 52),
+  i('img_14', '/img/blog-author.png', 'app/blog/[slug]/page.tsx', 60, 'png', 'webp', 96, true, false, 14),
+  i('img_15', '/img/promo.gif', 'components/PromoBanner.tsx', 8, 'gif', 'webp', 720, false, false, 144),
+  i('img_16', '/img/team-1.jpg', 'app/about/page.tsx', 12, 'jpeg', 'webp', 480, false, false, 36),
+  i('img_17', '/img/team-2.jpg', 'app/about/page.tsx', 13, 'jpeg', 'webp', 480, false, false, 36),
+  i('img_18', '/img/podcast.png', 'app/blog/page.tsx', 44, 'png', 'avif', 960, false, false, 72),
+  i('img_19', '/img/cart-empty.png', 'app/(shop)/cart/page.tsx', 8, 'png', 'svg', 240, true, false, 22),
+  i('img_20', '/img/badge.svg', 'components/Badge.tsx', 4, 'svg', 'svg', 64, false, false, 0),
+];

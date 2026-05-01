@@ -1,0 +1,61 @@
+[package]
+name = "quanta"
+version = "0.0.1"
+description = "Quanta — Next.js IDE"
+edition = "2021"
+rust-version = "1.77"
+
+[lib]
+name = "quanta_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["macos-private-api", "tray-icon", "image-png"] }
+
+# File system + shell + dialogs
+tauri-plugin-fs = "2"
+tauri-plugin-shell = "2"
+tauri-plugin-dialog = "2"
+tauri-plugin-clipboard-manager = "2"
+
+# OS / process / autostart
+tauri-plugin-os = "2"
+tauri-plugin-process = "2"
+tauri-plugin-autostart = "2"
+
+# Window UX
+tauri-plugin-window-state = "2"
+tauri-plugin-positioner = "2"
+tauri-plugin-single-instance = "2"
+
+# Notifications + global shortcut + deep-link + updater
+tauri-plugin-notification = "2"
+tauri-plugin-global-shortcut = "2"
+tauri-plugin-deep-link = "2"
+tauri-plugin-updater = "2"
+
+# Logging
+tauri-plugin-log = "2"
+log = "0.4"
+
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# File watching for live workspace incremental analysis
+notify = "6"
+glob = "0.3"
+
+# Async runtime for the tsserver bridge (spawn a Node child process and
+# read/write Content-Length framed JSON over stdio without blocking).
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "process", "io-util", "sync"] }
+
+# macOS-only convenience for native window manipulation
+[target."cfg(target_os = \"macos\")".dependencies]
+cocoa = "0.26"
+objc = "0.2"
+
+[features]
+custom-protocol = ["tauri/custom-protocol"]

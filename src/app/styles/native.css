@@ -1,0 +1,81 @@
+/*
+ * Native (Tauri) UX styles.
+ *
+ * Loaded from main.tsx alongside tokens.css. Pure CSS — no JS gating —
+ * because the rules are scoped to `[data-platform="macos"]` which only
+ * gets set when running inside Tauri's macOS shell (see useNativeMenu).
+ */
+
+/* Make the topbar a draggable region (drag the window by its chrome). */
+[data-platform='macos'] header[role='banner'] {
+  -webkit-app-region: drag;
+  app-region: drag;
+}
+
+/* Traffic-light spacer: macOS overlays the close/min/max buttons at
+ * { x: 18, y: 22 } — leave ~78px of empty space at the top-left so they
+ * don't overlap our left-panel toggle / first menu item. */
+[data-platform='macos'] header[role='banner'] {
+  padding-left: 80px;
+}
+
+/* Anything inside the topbar that should remain clickable (buttons,
+ * inputs, menus) needs the no-drag escape hatch. */
+[data-platform='macos'] header[role='banner'] button,
+[data-platform='macos'] header[role='banner'] input,
+[data-platform='macos'] header[role='banner'] [role='menu'],
+[data-platform='macos'] header[role='banner'] [role='menuitem'],
+[data-platform='macos'] header[role='banner'] [role='combobox'] {
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
+}
+
+/* Vibrancy: the Tauri window is transparent on macOS with a HUD effect.
+ * Make the app background slightly translucent so the system blur shows. */
+[data-platform='macos'] body {
+  background-color: color-mix(in srgb, var(--bg) 92%, transparent);
+}
+
+/* Smooth font rendering matching macOS native. */
+[data-platform='macos'] {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Disable text selection on chrome elements (matches native apps). */
+[data-platform='macos'] header[role='banner'],
+[data-platform='macos'] footer[role='contentinfo'],
+[data-platform='macos'] nav[aria-label] {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* macOS-specific scrollbar (subtle, overlay-style). */
+[data-platform='macos'] ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+[data-platform='macos'] ::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, currentColor 20%, transparent);
+  border-radius: 8px;
+}
+[data-platform='macos'] ::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, currentColor 35%, transparent);
+}
+[data-platform='macos'] ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Focus ring matches macOS Aqua blue (with system colors when available). */
+[data-platform='macos'] :focus-visible {
+  outline: 2px solid color-mix(in srgb, AccentColor 70%, transparent);
+  outline-offset: 1px;
+}
+
+/* Subtle elevation/shadow on overlays to mimic NSWindow chrome. */
+[data-platform='macos'] [role='dialog'] {
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.06),
+    0 24px 60px -12px rgba(0, 0, 0, 0.35);
+}

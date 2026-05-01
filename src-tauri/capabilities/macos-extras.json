@@ -1,0 +1,11 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "macos-extras",
+  "description": "macOS-only capabilities: tray, vibrancy, dock interactions.",
+  "platforms": ["macOS"],
+  "windows": ["main"],
+  "permissions": [
+    "core:tray:default",
+    "core:menu:default"
+  ]
+}

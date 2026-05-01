@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <!-- Network: Quanta hits localhost dev servers + Anthropic API + update endpoint. -->
+  <key>com.apple.security.network.client</key>
+  <true/>
+
+  <!-- File system: user-selected files only (sandbox-friendly). -->
+  <key>com.apple.security.files.user-selected.read-write</key>
+  <true/>
+  <key>com.apple.security.files.downloads.read-write</key>
+  <true/>
+
+  <!-- Apple events for AppleScript-like automation (e.g. tell Finder to reveal). -->
+  <key>com.apple.security.automation.apple-events</key>
+  <true/>
+
+  <!-- Allow shell-out to git/node/npm via Tauri shell plugin. -->
+  <key>com.apple.security.inherit</key>
+  <true/>
+
+  <!-- For the auto-updater to swap the app bundle. -->
+  <key>com.apple.security.cs.allow-jit</key>
+  <true/>
+  <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+  <true/>
+  <key>com.apple.security.cs.disable-library-validation</key>
+  <true/>
+</dict>
+</plist>

@@ -1,0 +1,23 @@
+{
+  "name": "quanta-vscode",
+  "displayName": "Quanta — Next.js IDE",
+  "description": "Probe RSC payloads, AST, and AI in a VS Code panel.",
+  "version": "0.0.1",
+  "publisher": "quanta",
+  "private": true,
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Other"],
+  "main": "./out/extension.js",
+  "activationEvents": ["onStartupFinished"],
+  "contributes": {
+    "commands": [
+      {
+        "command": "quanta.open",
+        "title": "Quanta: Open Probe Panel"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "tsc -p ."
+  }
+}

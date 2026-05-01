@@ -1,0 +1,82 @@
+import { useEffect, useRef } from 'react';
+import type { editor as MonacoEditor } from 'monaco-editor';
+import { match } from 'ts-pattern';
+import type { FileSemantics } from './use-line-semantics';
+
+interface Args {
+  editor: MonacoEditor.IStandaloneCodeEditor | null;
+  monaco: typeof import('monaco-editor') | null;
+  semantics: FileSemantics;
+}
+
+/**
+ * Apply diagnostic squiggles + after-line ghost annotations as Monaco decorations.
+ * Re-applies whenever the file or diagnostics change.
+ */
+export function useMonacoDecorations({ editor, monaco, semantics }: Args) {
+  const collectionRef = useRef<MonacoEditor.IEditorDecorationsCollection | null>(null);
+
+  useEffect(() => {
+    if (!editor || !monaco) return;
+
+    const decorations: MonacoEditor.IModelDeltaDecoration[] = [];
+
+    // Squiggles / dotted underlines for diagnostics
+    for (const [lineNo, dxs] of semantics.diagnosticsByLine) {
+      const top = dxs[0];
+      if (!top) continue;
+      const className = match([top.severity, top.confidence] as const)
+        .with(['err', 'high'], () => 'wave-underline-err')
+        .with(['err', 'medium'], () => 'wave-underline-err')
+        .with(['warn', 'high'], () => 'wave-underline-warn')
+        .with(['warn', 'medium'], () => 'dashed-underline-warn')
+        .with(['info', 'high'], () => 'dotted-underline')
+        .with(['info', 'medium'], () => 'dotted-underline')
+        .with(['hint', 'high'], () => 'dotted-underline')
+        .with(['hint', 'medium'], () => 'dotted-underline')
+        .otherwise(() => 'dotted-underline');
+
+      const model = editor.getModel();
+      if (!model) continue;
+      const lineMax = model.getLineMaxColumn(lineNo);
+      const lineMin = model.getLineFirstNonWhitespaceColumn(lineNo) || 1;
+
+      decorations.push({
+        range: new monaco.Range(lineNo, lineMin, lineNo, lineMax),
+        options: {
+          inlineClassName: className,
+          stickiness: 1,
+          hoverMessage: { value: `**${top.title}** — ${top.message}` },
+        },
+      });
+    }
+
+    // After-line ghost annotations (inline labels)
+    for (const line of semantics.lines) {
+      if (!line.ghost) continue;
+      const model = editor.getModel();
+      if (!model) continue;
+      const col = model.getLineMaxColumn(line.line);
+      decorations.push({
+        range: new monaco.Range(line.line, col, line.line, col),
+        options: {
+          after: {
+            content: '   ' + line.ghost,
+            inlineClassName: 'nss-ghost-after',
+          },
+          stickiness: 1,
+        },
+      });
+    }
+
+    if (collectionRef.current) {
+      collectionRef.current.set(decorations);
+    } else {
+      collectionRef.current = editor.createDecorationsCollection(decorations);
+    }
+
+    return () => {
+      collectionRef.current?.clear();
+    };
+  }, [editor, monaco, semantics]);
+}

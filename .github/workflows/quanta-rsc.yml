@@ -1,0 +1,87 @@
+name: Quanta RSC
+
+# Runs the Probe parser against every PR's preview deploy and posts a bundle
+# delta comment. Fails the check if client-bundle bytes regress > 5%.
+#
+# Replace `BASE_URL` with your preview URL (Vercel/Netlify/etc).
+# Replace `ROUTES` with the routes you care about.
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+env:
+  BASE_URL: http://localhost:3001
+  ROUTES: '/,/products/walnut-table,/island,/suspense,/action'
+
+jobs:
+  rsc-report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 1. Boot the app under test (replace with your start command).
+      - name: Install
+        run: npm ci
+      - name: Build + start
+        run: |
+          npm run build
+          (npm start &) && sleep 5
+
+      # 2. Capture baseline from the PR target branch (best-effort).
+      - name: Restore baseline
+        uses: actions/cache@v4
+        with:
+          path: .quanta/baseline.json
+          key: quanta-rsc-baseline-${{ github.base_ref }}
+
+      # 3. Run the Probe parser.
+      - name: Quanta RSC capture
+        id: capture
+        run: |
+          mkdir -p .quanta
+          node scripts/quanta-ci.mjs \
+            --base "$BASE_URL" \
+            --routes "$ROUTES" \
+            --out .quanta/report.json \
+            ${{ hashFiles('.quanta/baseline.json') != '' && '--baseline .quanta/baseline.json' || '' }}
+        continue-on-error: true
+
+      # 4. Post a PR comment with the delta.
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = JSON.parse(fs.readFileSync('.quanta/report.json', 'utf-8'));
+            const lines = ['## 📡 Quanta RSC report', ''];
+            lines.push('| Route | Chunks | Bytes | Client bundle | Suspense |');
+            lines.push('|---|---:|---:|---:|---:|');
+            for (const r of report.routes) {
+              lines.push(`| \`${r.url.replace(process.env.BASE_URL, '')}\` | ${r.chunks} | ${r.totalBytes} | ${r.clientBundleBytes} | ${r.suspenseBoundaries} |`);
+            }
+            if (report.baseline) {
+              const b = report.baseline;
+              const sign = b.delta > 0 ? '+' : '';
+              lines.push('');
+              lines.push(`**Total client bundle Δ:** ${sign}${b.delta}B (${sign}${b.pct}%)`);
+              if (b.pct > 5) lines.push('⚠️ **Regression > 5%**');
+            }
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: lines.join('\n'),
+            });
+
+      # 5. Save this run as next baseline.
+      - name: Save baseline
+        if: github.event.pull_request.merged == true
+        run: cp .quanta/report.json .quanta/baseline.json
+
+      - name: Fail if regression
+        if: steps.capture.outcome == 'failure'
+        run: exit 1

@@ -1,0 +1,237 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────
+   Next Static Studio — Design Tokens
+   light / white / hairline (1px) / single accent
+   no shadows except floating popovers.
+───────────────────────────────────────────────────────────── */
+
+:root {
+  /* Surface — cream-leaning whites for a calmer base (Google AI Studio / GH PR reference) */
+  --bg: 60 9% 99%;             /* #FCFCFB */
+  --bg-subtle: 48 14% 97%;     /* #F8F7F4 */
+  --bg-hover: 48 12% 95%;      /* #F2F1ED */
+  --bg-selected: 226 100% 97%; /* #EEF2FF */
+  --bg-active: 226 100% 94%;   /* #E0E7FF */
+
+  /* Border (hairline — almost invisible) */
+  --border: 30 8% 90%;         /* #E8E6E1 */
+  --border-strong: 30 7% 82%;  /* #D6D2CB */
+  --border-faint: 30 12% 95%;  /* #F0EEE9 */
+
+  /* Text */
+  --text: 30 6% 12%;           /* #211F1B */
+  --text-2: 30 5% 38%;          /* #62605A */
+  --text-3: 30 5% 60%;          /* #9C9A93 */
+  --text-link: 244 70% 58%;    /* #4F46E5 */
+
+  /* Accent (single — slightly desaturated indigo) */
+  --accent: 244 70% 58%;       /* indigo-600-ish */
+  --accent-soft: 226 100% 97%; /* #EEF2FF */
+
+  /* Severity (text color slightly desaturated; soft variants more pastel) */
+  --err: 0 65% 47%;            /* slightly cooler red */
+  --err-soft: 0 80% 96%;
+  --warn: 28 80% 44%;
+  --warn-soft: 38 100% 95%;
+  --info: 199 75% 40%;
+  --info-soft: 204 95% 96%;
+  --hint: 30 6% 45%;
+
+  /* Semantic — pastel-leaning */
+  --sem-static: 142 55% 38%;
+  --sem-static-soft: 142 70% 95%;
+  --sem-isr: 217 75% 49%;
+  --sem-isr-soft: 217 90% 96%;
+  --sem-dynamic: 28 80% 44%;
+  --sem-dynamic-soft: 38 100% 95%;
+  --sem-edge: 262 65% 56%;
+  --sem-edge-soft: 262 80% 96%;
+  --sem-client: 330 65% 50%;
+  --sem-client-soft: 330 80% 96%;
+  --sem-server: 199 75% 47%;
+  --sem-server-soft: 199 90% 96%;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Macintosh Edition theme — System 7 + early Aqua flavour.
+   Activated via [data-theme="mac"] on <html>.
+   Palette: warm platinum greys, soft beige, classic Mac accents.
+───────────────────────────────────────────────────────────── */
+
+[data-theme="mac"] {
+  --bg: 30 25% 96%;            /* #F5F0E6 — classic platinum cream */
+  --bg-subtle: 30 20% 92%;     /* #ECE4D6 */
+  --bg-hover: 30 18% 88%;      /* #E2D9C9 */
+  --bg-selected: 215 60% 87%;  /* #C8DAEC — System 7 selection blue tint */
+  --bg-active: 215 70% 78%;    /* #A8C4E0 */
+
+  --border: 30 14% 76%;        /* #C9C0B0 */
+  --border-strong: 30 12% 60%; /* #9F968A */
+  --border-faint: 30 16% 86%;  /* #DDD4C2 */
+
+  --text: 30 8% 14%;           /* #272421 */
+  --text-2: 30 8% 35%;
+  --text-3: 30 8% 55%;
+  --text-link: 217 70% 38%;    /* classic Mac hyperlink blue */
+
+  --accent: 217 80% 42%;       /* deeper aqua blue */
+  --accent-soft: 215 65% 90%;
+
+  --err: 350 65% 45%;
+  --err-soft: 350 75% 92%;
+  --warn: 35 80% 42%;
+  --warn-soft: 35 90% 90%;
+  --info: 200 60% 38%;
+  --info-soft: 200 80% 92%;
+  --hint: 30 6% 42%;
+
+  --sem-static: 138 50% 34%;
+  --sem-static-soft: 138 55% 90%;
+  --sem-isr: 217 70% 42%;
+  --sem-isr-soft: 217 75% 92%;
+  --sem-dynamic: 35 75% 42%;
+  --sem-dynamic-soft: 35 88% 90%;
+  --sem-edge: 270 55% 48%;
+  --sem-edge-soft: 270 65% 92%;
+  --sem-client: 320 55% 46%;
+  --sem-client-soft: 320 65% 92%;
+  --sem-server: 200 70% 38%;
+  --sem-server-soft: 200 75% 92%;
+}
+
+[data-theme="mac"] body {
+  /* Subtle stippled platinum texture, like System 7 desktop. */
+  background-image:
+    radial-gradient(hsl(var(--border-faint)) 1px, transparent 1px),
+    radial-gradient(hsl(var(--border-faint)) 1px, transparent 1px);
+  background-size: 4px 4px, 4px 4px;
+  background-position: 0 0, 2px 2px;
+  background-attachment: fixed;
+}
+
+/* High-contrast light variant */
+[data-theme="light-hc"] {
+  --border: 240 6% 70%;
+  --border-strong: 240 6% 50%;
+  --text-2: 240 6% 22%;
+  --text-3: 240 6% 42%;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Base
+───────────────────────────────────────────────────────────── */
+
+html, body, #root {
+  height: 100%;
+  background: hsl(var(--bg));
+  color: hsl(var(--text));
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: hsl(var(--accent) / 0.2);
+}
+
+/* Hairline reset */
+*, ::before, ::after {
+  border-color: hsl(var(--border));
+}
+
+/* Scrollbar — overlay style. Hidden at rest, fades in on scroll or hover. */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background: transparent;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 999px;
+  border: 0;
+  transition: background-color 200ms ease;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Reveal thumb on scroll (set by useScrollFade) or on container hover */
+:hover::-webkit-scrollbar-thumb,
+:focus-within::-webkit-scrollbar-thumb {
+  background: hsl(var(--border) / 0.55);
+}
+[data-scrolling="true"] ::-webkit-scrollbar-thumb {
+  background: hsl(var(--border) / 0.7);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--border-strong) / 0.85) !important;
+}
+
+/* Firefox: scrollbar-width has no per-state — use thin with transparent thumb,
+   visibility tracked via the same data-scrolling root attribute. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+:hover, :focus-within {
+  scrollbar-color: hsl(var(--border) / 0.55) transparent;
+}
+[data-scrolling="true"] * {
+  scrollbar-color: hsl(var(--border) / 0.7) transparent;
+}
+
+/* Focus ring (accessibility) */
+:focus-visible {
+  outline: 2px solid hsl(var(--accent));
+  outline-offset: 1px;
+}
+
+/* Hide focus ring on mouse-only interactions */
+[data-focus-visible="false"]:focus {
+  outline: none;
+}
+
+/* Prevent layout jitter from tooltip/popover */
+[data-radix-popper-content-wrapper] {
+  z-index: 60;
+}
+
+/* Custom utilities */
+@layer utilities {
+  .hairline-r { border-right: 1px solid hsl(var(--border)); }
+  .hairline-l { border-left: 1px solid hsl(var(--border)); }
+  .hairline-t { border-top: 1px solid hsl(var(--border)); }
+  .hairline-b { border-bottom: 1px solid hsl(var(--border)); }
+  .hairline { border: 1px solid hsl(var(--border)); }
+
+  .text-caps {
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 600;
+    font-size: 11px;
+  }
+
+  .dotted-underline {
+    text-decoration: underline dotted hsl(var(--hint)) 1.5px;
+    text-underline-offset: 4px;
+  }
+  .dashed-underline-warn {
+    text-decoration: underline dashed hsl(var(--warn)) 1.5px;
+    text-underline-offset: 4px;
+  }
+  .wave-underline-err {
+    text-decoration: underline wavy hsl(var(--err)) 1px;
+    text-underline-offset: 3px;
+  }
+  .wave-underline-warn {
+    text-decoration: underline wavy hsl(var(--warn)) 1px;
+    text-underline-offset: 3px;
+  }
+}
