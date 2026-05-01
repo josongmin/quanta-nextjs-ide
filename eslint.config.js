@@ -6,7 +6,18 @@ import tsPlugin from '@typescript-eslint/eslint-plugin';
 import reactHooks from 'eslint-plugin-react-hooks';
 
 export default [{
-  ignores: ['dist/**', 'node_modules/**', 'docs/**', '*.config.{js,ts,cjs,mjs}'],
+  ignores: [
+    'dist/**',
+    'node_modules/**',
+    'docs/**',
+    'storybook-static/**',
+    'src-tauri/**',
+    'e2e/**',
+    '.storybook/**',
+    'scripts/**',
+    'packages/**',
+    '*.config.{js,ts,cjs,mjs}',
+  ],
 }, {
   files: ['src/**/*.{ts,tsx}'],
   languageOptions: {

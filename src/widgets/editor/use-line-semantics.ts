@@ -92,11 +92,14 @@ export function useLineSemantics(
     const isRouteFile = !!route && (route.files.page === file || route.files.layout === file);
 
     const diagnosticsByLine = new Map<number, Diagnostic[]>();
+    const totalLines = rawLines.length;
     for (const d of diagnostics) {
       if (d.location.file !== file) continue;
-      const arr = diagnosticsByLine.get(d.location.line) ?? [];
+      const ln = d.location.line;
+      if (!Number.isInteger(ln) || ln < 1 || ln > totalLines) continue;
+      const arr = diagnosticsByLine.get(ln) ?? [];
       arr.push(d);
-      diagnosticsByLine.set(d.location.line, arr);
+      diagnosticsByLine.set(ln, arr);
     }
     // sort each bucket strongest-first
     for (const arr of diagnosticsByLine.values()) {
