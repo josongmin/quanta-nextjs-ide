@@ -13,7 +13,10 @@ import { useEditorSave } from '@shared/native/useEditorSave';
 import { UpdateBanner } from '@features/update-banner';
 import { lspClient } from '@shared/lsp';
 import { setWorkspaceRoot as setAiWorkspaceRoot } from '@shared/ai';
+import { setupLightweightMonaco } from '@shared/monaco/lightweight-setup';
 import { isNative } from '@shared/native';
+
+setupLightweightMonaco();
 // `@shared/analyzer/ts-strict` pulls in ts-morph (~1.6 MB gzipped), so we
 // dynamic-import it inside `FixtureTsStrictSeed` to keep that payload off
 // the main bundle's critical path.

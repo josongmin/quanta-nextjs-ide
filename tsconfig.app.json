@@ -39,10 +39,6 @@
   },
   "include": ["src"],
   "exclude": [
-    "src/features/type-safety-trace/any",
-    "src/features/type-safety-trace/props",
-    "src/features/type-safety-trace/cost",
-    "src/features/type-safety-trace/cast",
-    "src/features/type-safety-trace/editor-decorations.ts"
+    "src/features/type-safety-trace"
   ]
 }

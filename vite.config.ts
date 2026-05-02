@@ -66,6 +66,15 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ['monaco-editor'],
+    // We use only the core editor + a TypeScript syntax highlighter.
+    // Pre-bundle just the editor entry; language workers/contributions are
+    // stubbed out by `@shared/monaco/lightweight-setup`.
+    include: ['monaco-editor/esm/vs/editor/editor.api'],
+    exclude: [
+      'monaco-editor/esm/vs/language/typescript/ts.worker',
+      'monaco-editor/esm/vs/language/json/json.worker',
+      'monaco-editor/esm/vs/language/css/css.worker',
+      'monaco-editor/esm/vs/language/html/html.worker',
+    ],
   },
 });
