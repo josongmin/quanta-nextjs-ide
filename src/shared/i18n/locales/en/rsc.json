@@ -1,0 +1,46 @@
+{
+  "title": "RSC payload step-through",
+  "subtitle": "Flight wire format · streaming reconstruction",
+  "tabs": {
+    "live": "Live",
+    "waterfall": "Waterfall",
+    "boundaries": "Boundaries",
+    "snapshots": "Snapshots ({count})",
+    "diff": "Diff"
+  },
+  "source": {
+    "mock": "Mock",
+    "live": "Live"
+  },
+  "buttons": {
+    "fetch": "Fetch",
+    "capture": "Capture ({count})",
+    "replay": "Replay",
+    "batch": "Batch",
+    "export": "Export",
+    "import": "Import"
+  },
+  "auto": {
+    "label": "auto",
+    "off": "Off",
+    "focus": "Focus",
+    "interval": "5s"
+  },
+  "footer": {
+    "chunks": "chunks: {count}",
+    "visible": "visible: {count}",
+    "total": "total: {ms}ms",
+    "size": "size: {bytes}B"
+  },
+  "boundary": {
+    "title": "Suspense boundaries {count}",
+    "totalWait": "total wait {ms}ms",
+    "slowest": "slowest {ms}ms",
+    "empty": "No Suspense boundaries in this stream",
+    "emptyHint": "Fetch a route to see Suspense boundaries"
+  },
+  "waterfall": {
+    "emptyHint": "Fetch a route to see the chunk waterfall",
+    "chunkLabel": "chunk"
+  }
+}

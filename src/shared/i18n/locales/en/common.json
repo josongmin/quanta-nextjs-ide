@@ -1,0 +1,40 @@
+{
+  "app": {
+    "name": "Quanta",
+    "tagline": "Next.js full-stack IDE"
+  },
+  "actions": {
+    "open": "Open",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "ok": "OK",
+    "yes": "Yes",
+    "no": "No",
+    "confirm": "Confirm",
+    "apply": "Apply",
+    "discard": "Discard",
+    "refresh": "Refresh",
+    "retry": "Retry",
+    "copy": "Copy",
+    "paste": "Paste",
+    "delete": "Delete",
+    "rename": "Rename",
+    "search": "Search",
+    "filter": "Filter",
+    "settings": "Settings",
+    "more": "More",
+    "back": "Back",
+    "next": "Next"
+  },
+  "state": {
+    "idle": "idle",
+    "loading": "loading…",
+    "ready": "ready",
+    "error": "error",
+    "empty": "empty",
+    "unsaved": "unsaved",
+    "saved": "saved",
+    "synced": "synced"
+  }
+}

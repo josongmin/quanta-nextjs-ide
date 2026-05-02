@@ -1,0 +1,40 @@
+{
+  "app": {
+    "name": "Quanta",
+    "tagline": "Next.js 全栈 IDE"
+  },
+  "actions": {
+    "open": "打开",
+    "close": "关闭",
+    "save": "保存",
+    "cancel": "取消",
+    "ok": "确定",
+    "yes": "是",
+    "no": "否",
+    "confirm": "确认",
+    "apply": "应用",
+    "discard": "丢弃",
+    "refresh": "刷新",
+    "retry": "重试",
+    "copy": "复制",
+    "paste": "粘贴",
+    "delete": "删除",
+    "rename": "重命名",
+    "search": "搜索",
+    "filter": "筛选",
+    "settings": "设置",
+    "more": "更多",
+    "back": "返回",
+    "next": "下一步"
+  },
+  "state": {
+    "idle": "空闲",
+    "loading": "加载中…",
+    "ready": "就绪",
+    "error": "错误",
+    "empty": "空",
+    "unsaved": "未保存",
+    "saved": "已保存",
+    "synced": "已同步"
+  }
+}

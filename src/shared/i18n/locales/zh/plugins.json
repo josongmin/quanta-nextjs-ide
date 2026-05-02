@@ -1,0 +1,13 @@
+{
+  "title": "插件结果",
+  "subtitle": "{plugins} 个插件 · {findings} 个结果",
+  "registered": "已注册: {list}",
+  "none": "(无)",
+  "empty": "无结果。捕获 Probe 跟踪后,已注册的插件会扫描它。",
+  "severity": {
+    "err": "错误",
+    "warn": "警告",
+    "info": "信息",
+    "hint": "提示"
+  }
+}

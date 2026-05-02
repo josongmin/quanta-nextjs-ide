@@ -4,9 +4,9 @@ import { useUiStore } from '@entities/ui-shell';
 import { useEditorStore } from '@entities/editor';
 import { useDiagnosticStore } from '@entities/diagnostic';
 import { useRouteStore } from '@entities/route';
-import { Icon } from '@shared/ui';
 import { cn } from '@shared/lib/cn';
 import { ActivityFeed } from '@features/activity-feed';
+import { CockpitView } from '@features/cockpit';
 import { FixSafelyFab } from '@features/full-context-hover/fix-safely';
 import { EditorTabs } from './editor-tabs';
 import { EditorBreadcrumb } from './editor-breadcrumb';
@@ -22,6 +22,7 @@ import { StickyScrollLayer } from './parts/sticky-scroll-layer';
 import { BracketColorizationLayer } from './parts/bracket-colorization-layer';
 import { InlineParamHintsLayer } from './parts/inline-param-hints-layer';
 import { CodeLensLayer } from './parts/code-lens-layer';
+import { LiveRouteSpec } from '@features/live-route-spec';
 
 export function EditorArea() {
   const tabs = useEditorStore((s) => s.tabs);
@@ -43,14 +44,10 @@ export function EditorArea() {
     useState<MonacoEditor.IStandaloneCodeEditor | null>(null);
 
   if (!active) {
-    return (
-      <main className="flex h-full items-center justify-center bg-bg">
-        <div className="flex flex-col items-center gap-2 text-ink-3">
-          <Icon.File className="h-8 w-8" />
-          <span className="text-sm">No file open</span>
-        </div>
-      </main>
-    );
+    // Phase 15 — replace the "No file open" placeholder with the project
+    // pulse cockpit. Renders a derive-on-mount snapshot so the user sees
+    // health/risks/ship-readiness instantly with no clicks.
+    return <CockpitView inline />;
   }
 
   return (
@@ -78,6 +75,8 @@ export function EditorArea() {
           <BracketColorizationLayer editor={editorInstance} />
           <InlineParamHintsLayer editor={editorInstance} file={active.file} />
           <CodeLensLayer editor={editorInstance} file={active.file} />
+          {/* Phase 16 — Live Route Spec contract card (Monaco viewzone). */}
+          <LiveRouteSpec editor={editorInstance} file={active.file} />
         </div>
         {/*
           Floating minimap overlay (SOTA pattern à la VS Code):

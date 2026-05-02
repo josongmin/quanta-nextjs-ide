@@ -1,0 +1,43 @@
+{
+  "menu": {
+    "app": "Quanta",
+    "file": "파일",
+    "edit": "편집",
+    "view": "보기",
+    "probe": "Probe",
+    "window": "창",
+    "help": "도움말",
+    "openFolder": "폴더 열기…",
+    "importTrace": "추적 가져오기…",
+    "save": "저장",
+    "exportTrace": "추적 내보내기…",
+    "settings": "설정…",
+    "commandPalette": "명령 팔레트…",
+    "quickOpen": "빠른 열기…",
+    "toggleBottomPanel": "하단 패널 토글",
+    "toggleLeftPanel": "좌측 패널 토글",
+    "openRsc": "RSC 페이로드 단계 열기",
+    "captureNow": "마지막 추적 캡처",
+    "openAi": "Quanta AI 열기",
+    "openPlugins": "플러그인 결과",
+    "openGit": "Git 상태",
+    "docs": "Quanta 문서",
+    "reportIssue": "이슈 보고…"
+  },
+  "tray": {
+    "show": "Quanta 표시",
+    "capture": "마지막 라우트 캡처",
+    "openRsc": "RSC Probe 열기…",
+    "openAi": "Quanta AI 열기…",
+    "quit": "Quanta 종료"
+  },
+  "update": {
+    "available": "Quanta {version} 준비됨",
+    "install": "설치 + 재시작",
+    "installing": "설치 중…"
+  },
+  "locale": {
+    "label": "언어",
+    "switchTo": "{name}로 전환"
+  }
+}

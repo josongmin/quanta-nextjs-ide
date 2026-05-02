@@ -231,10 +231,14 @@ test.describe('Real Next.js 15 corpus', () => {
     // After fetching the /island route the chip shows the chunk count and is
     // no longer idle. (We don't assert on the initial state because the mock
     // source can auto-populate the trace store on first overlay open.)
+    // Force English for stable assertions (i18n adds locale switching).
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await page.evaluate(() => localStorage.setItem('quanta.locale', 'en'));
     await openLiveMode(page);
     await fetchRoute(page, '/island');
     await page.keyboard.press('Escape');
-    const chip = page.getByLabel('Quanta Probe status');
+    // After i18n: probe chip aria-label is the localized "PROBE" token.
+    const chip = page.getByRole('button', { name: 'PROBE', exact: true });
     await expect(chip).toBeVisible();
     await expect(chip).not.toContainText(/idle/);
   });

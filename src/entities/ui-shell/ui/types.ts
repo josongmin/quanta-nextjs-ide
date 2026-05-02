@@ -26,7 +26,11 @@ export type BottomTab =
   | 'live'
   | 'output'
   | 'terminal'
-  | 'runner';
+  | 'runner'
+  // Phase 19 — live, cache, trace surfaces
+  | 'live-events'
+  | 'cache-state'
+  | 'trace-graph';
 
 export type InspectorContext =
   | { kind: 'route'; routeId: string }
@@ -50,7 +54,15 @@ export type InspectionProfile =
   | 'enterprise'
   | 'taleban'
   | 'custom';
-export type ColorMode = 'light' | 'light-hc' | 'mac';
+export type ColorMode =
+  | 'light'
+  | 'light-hc'
+  | 'mac'
+  | 'sunset'
+  | 'dark'
+  | 'midnight'
+  | 'terminal'
+  | 'dim';
 export type AutofixPolicy = 'off' | 'suggest' | 'on-save';
 
 export interface RecentItem {

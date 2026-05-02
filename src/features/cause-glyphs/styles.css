@@ -1,0 +1,212 @@
+/* Phase 17 — Gutter Cause Glyphs.
+ *
+ * Glyphs render in Monaco's `glyphMargin` via `glyphMarginClassName`. Each
+ * decoration's class is `cg-glyph cg-glyph--{kind}`. The bar uses a vertical
+ * gradient via `mask-image` so it fades subtly at the ends.
+ *
+ * Hovering a glyph thickens the bar from 3px → 5px and adds a soft glow.
+ */
+
+.cg-glyph {
+  position: relative;
+  width: 3px !important;
+  margin-left: 6px;
+  border-radius: 1px;
+  background-color: hsl(var(--cg-color, var(--text-3)));
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 18%,
+    #000 82%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 18%,
+    #000 82%,
+    transparent 100%
+  );
+  transition:
+    width 140ms ease,
+    box-shadow 220ms ease,
+    background-color 220ms ease,
+    opacity 220ms ease;
+  cursor: pointer;
+  opacity: 1;
+  /* Cascade-in animation; staggered via inline animation-delay. */
+  animation: cg-fade-in 220ms ease both;
+}
+
+.cg-glyph::after {
+  /* Small icon overlay; only visible when the gutter has room. */
+  content: attr(data-cg-icon);
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 9px;
+  color: hsl(var(--cg-color, var(--text-3)));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+
+.cg-glyph:hover {
+  width: 5px !important;
+  box-shadow: 0 0 8px 0 hsl(var(--cg-color, var(--text-3)) / 0.4);
+}
+
+.cg-glyph:hover::after {
+  opacity: 0.8;
+}
+
+/* Per-kind colors via CSS custom property so the same selector works
+ * regardless of theme. */
+.cg-glyph--static-safe {
+  --cg-color: var(--sem-static);
+}
+.cg-glyph--dynamic-trigger {
+  --cg-color: var(--sem-dynamic);
+}
+.cg-glyph--cache-mutation {
+  --cg-color: var(--accent);
+}
+.cg-glyph--client-leak-source {
+  --cg-color: var(--sem-client);
+}
+.cg-glyph--secret-flow {
+  --cg-color: var(--err);
+}
+
+/* Filtered state: kinds that don't match the active filter fade. */
+.cg-glyph--filtered-out {
+  opacity: 0.15;
+}
+
+/* Low-confidence: hover-only visibility. */
+.cg-glyph--low {
+  opacity: 0.4;
+}
+.cg-glyph--low:hover {
+  opacity: 1;
+}
+
+/* Pulse ring for newly-appeared glyphs. */
+.cg-glyph--new {
+  animation: cg-pulse 1.6s ease-out 1;
+}
+
+/* "Recovered" green tick after a glyph disappears (rendered in a transient
+ * decoration inserted just before removal). */
+.cg-recovered {
+  width: 3px !important;
+  margin-left: 6px;
+  background-color: hsl(var(--sem-static));
+  border-radius: 1px;
+  animation: cg-recovered-flash 1s ease-out 1;
+}
+
+@keyframes cg-fade-in {
+  from {
+    opacity: 0;
+    transform: translateX(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes cg-pulse {
+  0% {
+    box-shadow: 0 0 0 0 hsl(var(--cg-color, var(--text-3)) / 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 8px hsl(var(--cg-color, var(--text-3)) / 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 hsl(var(--cg-color, var(--text-3)) / 0);
+  }
+}
+
+@keyframes cg-recovered-flash {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+/* ─── Legend popover ─── */
+.cg-legend {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: hsl(var(--bg) / 0.95);
+  border: 1px solid hsl(var(--border-faint));
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 16px hsl(0 0% 0% / 0.06);
+  font-size: 11px;
+  z-index: 6;
+  user-select: none;
+}
+
+.cg-legend__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: hsl(var(--bg-subtle));
+  border: 1px solid transparent;
+  color: hsl(var(--text-2));
+  cursor: pointer;
+  transition: background 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+.cg-legend__pill[data-active='true'] {
+  border-color: hsl(var(--cg-color, var(--text-3)) / 0.5);
+  background: hsl(var(--cg-color, var(--text-3)) / 0.08);
+  color: hsl(var(--cg-color, var(--text-3)));
+}
+.cg-legend__pill:hover {
+  background: hsl(var(--bg-2));
+}
+.cg-legend__swatch {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: hsl(var(--cg-color, var(--text-3)));
+}
+.cg-legend__count {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  color: hsl(var(--text-2));
+}
+.cg-legend__toggle {
+  margin-left: 4px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid hsl(var(--border-faint));
+  color: hsl(var(--text-3));
+  cursor: pointer;
+  font-size: 10px;
+}
+.cg-legend__toggle[data-on='true'] {
+  background: hsl(var(--accent) / 0.1);
+  border-color: hsl(var(--accent) / 0.4);
+  color: hsl(var(--accent));
+}

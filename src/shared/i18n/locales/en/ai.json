@@ -1,0 +1,38 @@
+{
+  "title": "Quanta AI",
+  "subtitle": "Probe + AST aware assistant",
+  "ask": "Ask",
+  "askPlaceholder": "Ask anything (Probe + AST in context)…",
+  "thinking": "thinking…",
+  "clear": "Clear",
+  "settings": {
+    "title": "Settings",
+    "showSettings": "Settings",
+    "hideSettings": "Hide settings",
+    "provider": "provider",
+    "stub": "Stub",
+    "anthropic": "Anthropic",
+    "apiKey": "anthropic api key",
+    "apiKeyHint": "Stored in localStorage. Browser → Anthropic direct call.",
+    "noKeyFallback": "no key — falls back to stub"
+  },
+  "context": {
+    "preview": "Context preview",
+    "noProbe": "(no Probe trace)",
+    "filesScanned": "Files scanned: {count}",
+    "useClient": "'use client' files: {count}",
+    "useServer": "'use server' files: {count}",
+    "declaredNotShipped": "AST has 'use client' but Probe didn't see it ship: {count}"
+  },
+  "mode": {
+    "label": "mode",
+    "agent": "agent (claude-opus-4-7)"
+  },
+  "errors": {
+    "requestFailed": "AI request failed: {message}"
+  },
+  "intro": "Ask: \"why is /products heavy?\" — every prompt is sent with your latest Probe trace and AST findings.",
+  "stub": {
+    "header": "**Stub AI** — no real LLM call. Connect an API key to upgrade."
+  }
+}

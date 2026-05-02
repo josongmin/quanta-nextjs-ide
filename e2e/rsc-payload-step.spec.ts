@@ -188,6 +188,46 @@ test.describe('RSC payload step overlay', () => {
     await expect(page.getByText(/Install \+ relaunch/)).toHaveCount(0);
   });
 
+  test('i18n: locale switcher cycles en → ko → zh and re-labels Probe chip', async ({ page }) => {
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await page.evaluate(() => localStorage.setItem('quanta.locale', 'en'));
+    await page.reload();
+    await page.waitForLoadState('domcontentloaded');
+
+    // English baseline: status bar Probe label is "PROBE" (exact, to avoid
+    // matching the "What is Quanta Probe?" sibling button).
+    await expect(page.getByRole('button', { name: 'PROBE', exact: true })).toBeVisible();
+
+    // Click locale chip → ko (next in SUPPORTED_LOCALES after en)
+    await page.getByTestId('locale-chip').click();
+    await expect(page.getByRole('button', { name: '프로브', exact: true })).toBeVisible({
+      timeout: 5_000,
+    });
+
+    // Click again → zh
+    await page.getByTestId('locale-chip').click();
+    await expect(page.getByRole('button', { name: '探针', exact: true })).toBeVisible({
+      timeout: 5_000,
+    });
+
+    // <html lang> reflects active locale
+    const lang = await page.evaluate(() => document.documentElement.lang);
+    expect(lang).toBe('zh');
+  });
+
+  test('i18n: Probe Info overlay is in Korean when locale=ko', async ({ page }) => {
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await page.evaluate(() => localStorage.setItem('quanta.locale', 'ko'));
+    await page.reload();
+    await page.waitForLoadState('domcontentloaded');
+    // Wait until ko bundle has applied (probe label is Korean).
+    await expect(page.getByLabel('프로브')).toBeVisible({ timeout: 5_000 });
+
+    await page.getByLabel('Quanta Probe란?').click();
+    await expect(page.getByText('Probe란?')).toBeVisible({ timeout: 5_000 });
+    await expect(page.getByText('캡처 방법')).toBeVisible();
+  });
+
   test('error state when backend rejects', async ({ page }) => {
     await openRscOverlay(page);
     await page.getByRole('button', { name: 'Live', exact: true }).first().click();

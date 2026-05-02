@@ -18,6 +18,7 @@ import {
   type UiToolEvent,
 } from '@shared/ai';
 import { AiSettingsPanel } from '@features/ai-settings';
+import { GovernedFlowButton } from '@features/ai-governed-mode/integration';
 import { Button, Chip, OverlayPanel, ScrollArea } from '@shared/ui';
 
 /**
@@ -188,6 +189,7 @@ export function AiPanelOverlay() {
               <Chip tone="edge" size="xs">no key — falls back to stub</Chip>
             ) : null}
           </span>
+          <GovernedFlowButton />
           <Button size="xs" tone="ghost" onClick={() => setShowSettings((v) => !v)}>
             {showSettings ? 'Hide settings' : 'Settings'}
           </Button>

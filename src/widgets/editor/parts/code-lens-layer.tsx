@@ -13,9 +13,10 @@ interface Props {
 interface PositionedLens extends CodeLensDecl {
   top: number;
   left: number;
+  height: number;
 }
 
-const LENS_HEIGHT = 18;
+const LENS_GAP_LEFT = 24; // px past end-of-line
 
 function chipTone(kind: LensKind): 'accent' | 'info' | 'muted' {
   if (kind === 'refs') return 'accent';
@@ -59,20 +60,21 @@ export function CodeLensLayer({ editor, file }: Props) {
       for (const decl of decls) {
         if (decl.line > totalLines) continue;
         if (decl.line < startLine || decl.line > endLine) continue;
-        const coords = editor.getScrolledVisiblePosition({
+        const maxCol = model.getLineMaxColumn(decl.line);
+        const endCoords = editor.getScrolledVisiblePosition({
           lineNumber: decl.line,
-          column: 1,
+          column: maxCol,
         });
-        if (!coords) continue;
-        const indentCol = model.getLineFirstNonWhitespaceColumn(decl.line) || 1;
-        const indentCoords = editor.getScrolledVisiblePosition({
-          lineNumber: decl.line,
-          column: indentCol,
-        });
+        if (!endCoords) continue;
+        // Trailing position: end-of-line + gap. This keeps the chip out of
+        // the gutter and never pushes the line itself, so line numbers stay
+        // visually contiguous (1, 2, 3, … rather than the gappy 1, 2, 4, …
+        // we saw when the lens floated above the line).
         out.push({
           ...decl,
-          top: coords.top - LENS_HEIGHT - 2,
-          left: indentCoords ? indentCoords.left : coords.left,
+          top: endCoords.top,
+          left: endCoords.left + LENS_GAP_LEFT,
+          height: endCoords.height || 20,
         });
       }
       setPositions(out);
@@ -97,16 +99,18 @@ export function CodeLensLayer({ editor, file }: Props) {
   return (
     <div
       aria-hidden={false}
-      className="pointer-events-none absolute inset-0 z-20"
+      className="pointer-events-none absolute inset-0 z-[5]"
     >
       {positions.map((p) => (
         <div
           key={`${p.line}-${p.symbol}`}
           className={cn(
-            'pointer-events-auto absolute flex items-center gap-1.5',
-            'rounded-sm px-1 py-0',
+            'pointer-events-auto group absolute flex items-center gap-1',
+            'opacity-55 hover:opacity-100',
+            'transition-opacity duration-moderate ease-swift-out',
           )}
-          style={{ top: p.top, left: p.left, height: LENS_HEIGHT }}
+          style={{ top: p.top, left: p.left, height: p.height }}
+          data-lens-line={p.line}
         >
           {p.chips.map((c) => (
             <Tooltip key={c.kind} content={c.tooltip}>
@@ -117,7 +121,7 @@ export function CodeLensLayer({ editor, file }: Props) {
                     description: `Line ${p.line} · ${c.label}`,
                   })
                 }
-                className="inline-flex items-center"
+                className="mi-press inline-flex items-center"
               >
                 <Chip tone={chipTone(c.kind)} size="xs">
                   {c.label}

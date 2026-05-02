@@ -3,7 +3,7 @@ import { forwardRef, type HTMLAttributes } from 'react';
 import { cn } from '@shared/lib/cn';
 
 const chip = cva(
-  'inline-flex items-center gap-1 rounded-full border px-1.5 py-0 text-xs font-medium tracking-caps select-none whitespace-nowrap',
+  'inline-flex items-center gap-1 rounded-full border px-1.5 py-0 text-xs font-medium tracking-caps select-none whitespace-nowrap transition-[background-color,border-color,color,transform] duration-moderate ease-spring-soft',
   {
     variants: {
       tone: {

@@ -1,0 +1,13 @@
+{
+  "title": "Plugin findings",
+  "subtitle": "{plugins} plugin(s) · {findings} finding(s)",
+  "registered": "Registered: {list}",
+  "none": "(none)",
+  "empty": "No findings. Capture a Probe trace and the registered plugins will scan it.",
+  "severity": {
+    "err": "err",
+    "warn": "warn",
+    "info": "info",
+    "hint": "hint"
+  }
+}

@@ -244,6 +244,12 @@ export interface OverlayState {
       | 'compileHotspot'
       | 'playwright';
   };
+  // ── Phase 15 Cockpit Start Screen ──────────────────────────
+  cockpit: { open: boolean };
+  // ── Phase 18 AI Governed Mode UI ──────────────────────────
+  governedFlow: { open: boolean };
+  // ── Phase 21 Ship-it Drawer ────────────────────────────────
+  shipDrawer: { open: boolean };
   pinned: Array<{ id: string; title: string; meta: string }>;
 }
 
@@ -465,6 +471,12 @@ export const initialOverlays: OverlayState = {
   otelTrace: { open: false },
   // Phase 14 Dev Loop Mastery
   devLoop: { open: false },
+  // Phase 15 Cockpit Start Screen
+  cockpit: { open: false },
+  // Phase 18 AI Governed Mode UI
+  governedFlow: { open: false },
+  // Phase 21 Ship-it Drawer
+  shipDrawer: { open: false },
   pinned: [],
 };
 

@@ -17,6 +17,7 @@ import { InlineLenses } from './parts/inline-lenses';
 import { EditorContextMenu } from './parts/editor-context-menu';
 import { EditorDiffGutter, DIFF_GUTTER_WIDTH } from './parts/editor-diff-gutter';
 import { EditorLightbulb, LIGHTBULB_WIDTH } from './parts/editor-lightbulb';
+import { useCauseGlyphs, CauseGlyphsLegend } from '@features/cause-glyphs';
 
 interface Props {
   file: string;
@@ -159,6 +160,11 @@ export function EditorSurface({ file, onEditorReady }: Props) {
   // hover from useLspProviders continues to work unchanged.
   useContextHover({ editor: editorInstance, file });
 
+  // Phase 17 — Gutter Cause Glyphs. Strictly additive: paints a 3px colored
+  // bar in Monaco's glyph margin for every line that carries Next.js
+  // semantic weight (dynamic triggers, cache mutations, leaks, secrets).
+  const causeGlyphs = useCauseGlyphs({ editor: editorInstance, monaco, file, source });
+
   // Inlay hints provider (semantic ⟨...⟩ labels at end of relevant lines)
   useEffect(() => {
     if (!monaco) return;
@@ -278,7 +284,7 @@ export function EditorSurface({ file, onEditorReady }: Props) {
               minimap: { enabled: false },
               lineNumbers: 'off',
               folding: true,
-              glyphMargin: false,
+              glyphMargin: true,
               scrollBeyondLastLine: false,
               renderLineHighlight: 'none',
               padding: { top: 8, bottom: 8 },
@@ -325,6 +331,9 @@ export function EditorSurface({ file, onEditorReady }: Props) {
           editor={editorInstance}
           diagnosticsByLine={semantics.diagnosticsByLine}
         />
+
+        {/* Phase 17 — Cause glyphs legend (bottom-right floating pill row). */}
+        <CauseGlyphsLegend result={causeGlyphs} />
       </div>
     </EditorContextMenu>
   );

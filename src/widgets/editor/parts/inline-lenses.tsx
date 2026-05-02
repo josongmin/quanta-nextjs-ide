@@ -68,9 +68,14 @@ export function InlineLenses({ editor, monaco, semantics, file }: Props) {
       for (const spec of specs) {
         const domNode = document.createElement('div');
         domNode.className = 'nss-lens-zone';
+        // Push the lens content past the line-number gutter so it never
+        // overlaps the gutter glyphs. 64px ≈ Monaco default gutter width
+        // (line numbers + decorations + folding margin).
+        domNode.style.paddingLeft = '64px';
+        domNode.style.boxSizing = 'border-box';
         const zoneId = accessor.addZone({
           afterLineNumber: spec.afterLineNumber,
-          heightInPx: 22,
+          heightInPx: 26,
           domNode,
         });
         created.push({ spec, domNode, zoneId });

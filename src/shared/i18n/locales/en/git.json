@@ -1,0 +1,22 @@
+{
+  "title": "Git status",
+  "subtitle": "via shell bridge",
+  "loading": "Loading…",
+  "branch": "branch",
+  "ahead": "↑{count}",
+  "behind": "↓{count}",
+  "shellUnavailable": "shell unavailable — Tauri build needed",
+  "shellUnavailableLong": "In a browser the IDE has no shell access. The Tauri build (Phase 14b) injects a shell bridge that runs `git status` against the open project.",
+  "clean": "Working tree clean — nothing to commit.",
+  "status": {
+    "modified": "modified",
+    "added": "added",
+    "deleted": "deleted",
+    "renamed": "renamed",
+    "untracked": "untracked",
+    "ignored": "ignored"
+  },
+  "errors": {
+    "gitFailed": "git failed: {message}"
+  }
+}

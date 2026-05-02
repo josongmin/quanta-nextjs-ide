@@ -4,16 +4,31 @@ import { forwardRef, type ButtonHTMLAttributes } from 'react';
 import { cn } from '@shared/lib/cn';
 
 const button = cva(
-  'inline-flex select-none items-center justify-center gap-1.5 whitespace-nowrap rounded-sm border text-sm transition-colors focus-visible:outline-2 focus-visible:outline-accent disabled:pointer-events-none disabled:opacity-50',
+  [
+    'inline-flex select-none items-center justify-center gap-1.5 whitespace-nowrap',
+    'rounded-md border text-sm tracking-tightish',
+    // Springy press + tonal cross-fade.
+    'transition-[transform,background-color,border-color,color,box-shadow]',
+    'duration-moderate ease-spring-soft',
+    'active:scale-[0.97] active:duration-instant',
+    'mi-focus-ring',
+    'disabled:pointer-events-none disabled:opacity-50',
+  ].join(' '),
   {
     variants: {
       tone: {
-        default: 'bg-bg border-line text-ink-1 hover:bg-bg-hover',
-        ghost: 'bg-transparent border-transparent text-ink-2 hover:bg-bg-hover hover:text-ink-1',
-        accent: 'bg-accent border-accent text-white hover:bg-accent/90',
-        soft: 'bg-bg-subtle border-line text-ink-1 hover:bg-bg-hover',
-        warn: 'bg-bg border-sev-warn/30 text-sev-warn hover:bg-sev-warn-soft',
-        err: 'bg-bg border-sev-err/30 text-sev-err hover:bg-sev-err-soft',
+        default:
+          'bg-bg border-line text-ink-1 hover:bg-bg-hover hover:border-line-strong',
+        ghost:
+          'bg-transparent border-transparent text-ink-2 hover:bg-bg-hover hover:text-ink-1',
+        accent:
+          'bg-accent border-accent text-white hover:brightness-110 hover:shadow-glow-accent',
+        soft:
+          'bg-bg-subtle border-line text-ink-1 hover:bg-bg-hover hover:border-line-strong',
+        warn:
+          'bg-bg border-sev-warn/30 text-sev-warn hover:bg-sev-warn-soft hover:border-sev-warn/50',
+        err:
+          'bg-bg border-sev-err/30 text-sev-err hover:bg-sev-err-soft hover:border-sev-err/50',
       },
       size: {
         xs: 'h-5 px-1.5 text-[11px]',

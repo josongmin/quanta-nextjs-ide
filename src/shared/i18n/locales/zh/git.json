@@ -1,0 +1,22 @@
+{
+  "title": "Git 状态",
+  "subtitle": "通过 shell 桥接",
+  "loading": "加载中…",
+  "branch": "分支",
+  "ahead": "↑{count}",
+  "behind": "↓{count}",
+  "shellUnavailable": "shell 不可用 — 需要 Tauri 构建",
+  "shellUnavailableLong": "在浏览器中,IDE 无 shell 访问。Tauri 构建 (Phase 14b) 注入一个 shell 桥接,在打开的项目上运行 `git status`。",
+  "clean": "工作树干净 — 无内容可提交。",
+  "status": {
+    "modified": "已修改",
+    "added": "已添加",
+    "deleted": "已删除",
+    "renamed": "已重命名",
+    "untracked": "未跟踪",
+    "ignored": "已忽略"
+  },
+  "errors": {
+    "gitFailed": "git 失败: {message}"
+  }
+}

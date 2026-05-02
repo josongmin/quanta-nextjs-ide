@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { editor as MonacoEditor } from 'monaco-editor';
 import { InlineBlame, blameForLine } from '@features/inline-blame';
+import { cn } from '@shared/lib/cn';
 
 interface Props {
   editor: MonacoEditor.IStandaloneCodeEditor | null;
@@ -14,7 +15,12 @@ interface AnchorState {
   height: number;
 }
 
-const MIN_LEFT_OFFSET = 32;
+/**
+ * Minimum gap between end-of-line text and the blame chip. Keeps the blame
+ * far enough away that it never collides with lens chips or ghost
+ * annotations rendered on the same line.
+ */
+const MIN_GAP_FROM_TEXT = 96;
 
 /**
  * Inline blame overlay — VS Code GitLens-style ghost row showing author /
@@ -55,11 +61,13 @@ export function InlineBlameLayer({ editor, file }: Props) {
         setAnchor(null);
         return;
       }
-      // Anchor at end-of-line; clamp so we never escape the editor surface.
+      // Anchor at end-of-line, but pushed far enough right that the blame
+      // never collides with code-lens chips or ghost annotations rendered
+      // by other overlays on the same line.
       setAnchor({
         line: pos.lineNumber,
         top: coords.top,
-        left: Math.max(MIN_LEFT_OFFSET, coords.left + 16),
+        left: coords.left + MIN_GAP_FROM_TEXT,
         height: coords.height || 20,
       });
     };
@@ -87,7 +95,12 @@ export function InlineBlameLayer({ editor, file }: Props) {
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute z-20 flex items-center"
+      className={cn(
+        'pointer-events-none absolute z-[6] flex items-center',
+        'rounded-md px-1.5',
+        'opacity-55 transition-opacity duration-moderate ease-swift-out',
+        'hover:opacity-100',
+      )}
       style={{
         top: anchor.top,
         left: anchor.left,

@@ -1,0 +1,14 @@
+{
+  "generic": "Something went wrong: {message}",
+  "noUrl": "Enter a URL",
+  "noChunksToCapture": "No chunks to capture yet",
+  "nothingToExport": "Nothing to export — fetch a route first",
+  "importFailed": "Import failed: {reason}",
+  "noRoutes": "No routes provided",
+  "noActiveFile": "No active file to save",
+  "saveFailed": "Save failed: {message}",
+  "fetchFailed": "Fetch failed: {status} {statusText}",
+  "noBody": "No response body",
+  "tauriRequired": "Requires Tauri build",
+  "shellUnavailable": "Shell unavailable in browser. Open in Tauri build."
+}

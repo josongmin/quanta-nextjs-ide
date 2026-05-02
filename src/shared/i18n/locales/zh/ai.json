@@ -1,0 +1,38 @@
+{
+  "title": "Quanta AI",
+  "subtitle": "Probe + AST 感知助手",
+  "ask": "提问",
+  "askPlaceholder": "提任何问题 (Probe + AST 在上下文中)…",
+  "thinking": "思考中…",
+  "clear": "清除",
+  "settings": {
+    "title": "设置",
+    "showSettings": "设置",
+    "hideSettings": "隐藏设置",
+    "provider": "提供者",
+    "stub": "存根",
+    "anthropic": "Anthropic",
+    "apiKey": "Anthropic API 密钥",
+    "apiKeyHint": "存储在 localStorage。浏览器 → Anthropic 直接调用。",
+    "noKeyFallback": "无密钥 — 回退到存根"
+  },
+  "context": {
+    "preview": "上下文预览",
+    "noProbe": "(无 Probe 跟踪)",
+    "filesScanned": "扫描的文件: {count}",
+    "useClient": "'use client' 文件: {count}",
+    "useServer": "'use server' 文件: {count}",
+    "declaredNotShipped": "AST 有 'use client' 但 Probe 未见: {count}"
+  },
+  "mode": {
+    "label": "模式",
+    "agent": "代理 (claude-opus-4-7)"
+  },
+  "errors": {
+    "requestFailed": "AI 请求失败: {message}"
+  },
+  "intro": "提问: \"为什么 /products 这么重?\" — 每个提示都会发送您的最新 Probe 跟踪和 AST 结果。",
+  "stub": {
+    "header": "**存根 AI** — 无真实 LLM 调用。连接 API 密钥以升级。"
+  }
+}

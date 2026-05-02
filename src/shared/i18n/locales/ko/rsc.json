@@ -1,0 +1,46 @@
+{
+  "title": "RSC 페이로드 단계별 보기",
+  "subtitle": "Flight 와이어 포맷 · 스트리밍 재구성",
+  "tabs": {
+    "live": "라이브",
+    "waterfall": "워터폴",
+    "boundaries": "경계",
+    "snapshots": "스냅샷 ({count})",
+    "diff": "비교"
+  },
+  "source": {
+    "mock": "목업",
+    "live": "라이브"
+  },
+  "buttons": {
+    "fetch": "가져오기",
+    "capture": "캡처 ({count})",
+    "replay": "재생",
+    "batch": "배치",
+    "export": "내보내기",
+    "import": "가져오기"
+  },
+  "auto": {
+    "label": "자동",
+    "off": "끔",
+    "focus": "포커스",
+    "interval": "5초"
+  },
+  "footer": {
+    "chunks": "청크: {count}",
+    "visible": "표시: {count}",
+    "total": "총: {ms}ms",
+    "size": "크기: {bytes}B"
+  },
+  "boundary": {
+    "title": "Suspense 경계 {count}",
+    "totalWait": "총 대기 {ms}ms",
+    "slowest": "가장 느림 {ms}ms",
+    "empty": "이 스트림에 Suspense 경계 없음",
+    "emptyHint": "라우트를 가져와서 Suspense 경계 보기"
+  },
+  "waterfall": {
+    "emptyHint": "라우트를 가져와서 청크 워터폴 보기",
+    "chunkLabel": "청크"
+  }
+}

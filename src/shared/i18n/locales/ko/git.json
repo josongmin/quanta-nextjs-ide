@@ -1,0 +1,22 @@
+{
+  "title": "Git 상태",
+  "subtitle": "셸 브리지 경유",
+  "loading": "로딩 중…",
+  "branch": "브랜치",
+  "ahead": "↑{count}",
+  "behind": "↓{count}",
+  "shellUnavailable": "셸 사용 불가 — Tauri 빌드 필요",
+  "shellUnavailableLong": "브라우저에서는 IDE가 셸 접근이 없습니다. Tauri 빌드 (Phase 14b)는 사용자가 연 프로젝트에서 `git status`를 실행하는 셸 브리지를 주입합니다.",
+  "clean": "작업 트리 깨끗함 — 커밋할 내용 없음.",
+  "status": {
+    "modified": "수정됨",
+    "added": "추가됨",
+    "deleted": "삭제됨",
+    "renamed": "이름 변경됨",
+    "untracked": "추적 안 됨",
+    "ignored": "무시됨"
+  },
+  "errors": {
+    "gitFailed": "git 실패: {message}"
+  }
+}

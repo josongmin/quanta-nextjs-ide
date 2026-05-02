@@ -1,0 +1,16 @@
+{
+  "noFile": "no file",
+  "noRisks": "no risks",
+  "problemsForFile": "Problems for this file",
+  "quickFix": "Quick fix",
+  "commandPalette": "Command palette",
+  "openAi": "Open Quanta AI",
+  "ai": "AI",
+  "probe": "PROBE",
+  "probeIdle": "idle",
+  "probeTitleIdle": "Quanta Probe: no RSC trace yet — click to capture",
+  "probeTitleActive": "Quanta Probe: {count, plural, =1 {1 chunk} other {# chunks}} captured from {url}",
+  "probeWhatIs": "What is Quanta Probe?",
+  "client": "client {kb}KB",
+  "tags": "tags: {list}"
+}

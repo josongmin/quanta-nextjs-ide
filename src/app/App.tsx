@@ -11,6 +11,7 @@ import { DEMO_WORKSPACE_ROOT, useWorkspaceStore } from '@shared/workspace';
 import { useNativeMenu } from '@shared/native/useNativeMenu';
 import { useEditorSave } from '@shared/native/useEditorSave';
 import { UpdateBanner } from '@features/update-banner';
+import { NextMicroInteractions } from '@features/next-micro-interactions';
 import { lspClient } from '@shared/lsp';
 import { setWorkspaceRoot as setAiWorkspaceRoot } from '@shared/ai';
 import { setupLightweightMonaco } from '@shared/monaco/lightweight-setup';
@@ -21,12 +22,26 @@ setupLightweightMonaco();
 // dynamic-import it inside `FixtureTsStrictSeed` to keep that payload off
 // the main bundle's critical path.
 
+const DARK_MODES = new Set(['dark', 'midnight', 'terminal', 'dim']);
+
 function ThemeBridge() {
   const colorMode = useUiStore((s) => s.colorMode);
+  const first = useRef(true);
   useEffect(() => {
     const root = document.documentElement;
+    // Briefly enable cross-fade transitions when the theme actually changes
+    // (skip on first paint to avoid a flash). A 320ms window covers both
+    // CSS variable propagation and Radix portals.
+    if (!first.current) {
+      root.dataset.themeTransition = 'true';
+      window.setTimeout(() => {
+        root.dataset.themeTransition = 'false';
+      }, 320);
+    }
+    first.current = false;
     root.dataset.theme = colorMode;
     root.dataset.macEdition = colorMode === 'mac' ? 'true' : 'false';
+    root.dataset.scheme = DARK_MODES.has(colorMode) ? 'dark' : 'light';
   }, [colorMode]);
   return null;
 }
@@ -178,6 +193,7 @@ export function App() {
       <LspBootstrap />
       <AiWorkspaceBridge />
       <UpdateBanner />
+      <NextMicroInteractions />
       <AppRouter />
       <Toaster position="bottom-right" theme="light" richColors closeButton />
     </>

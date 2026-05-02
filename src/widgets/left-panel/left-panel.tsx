@@ -48,7 +48,7 @@ export function LeftPanel() {
       aria-label="Next App Map"
       className="flex h-full min-h-0 flex-col bg-bg-subtle"
     >
-      <div className="flex shrink-0 items-stretch overflow-x-auto hairline-b bg-bg">
+      <div className="flex shrink-0 items-stretch overflow-x-auto hairline-b bg-bg select-none">
         {tabs.map((t) => {
           const I = Icon[t.iconKey];
           const active = leftTab === t.key;
@@ -56,20 +56,24 @@ export function LeftPanel() {
             <button
               key={t.key}
               onClick={() => setLeftTab(t.key)}
-              aria-current={active}
+              aria-current={active ? 'true' : undefined}
+              data-active={active}
               className={cn(
-                'group relative flex h-9 shrink-0 items-center gap-1.5 px-2 text-sm text-ink-2 hover:text-ink-1',
-                active && 'text-ink-1 font-medium',
+                'mi-press mi-underline mi-focus-ring',
+                'group relative flex h-9 shrink-0 items-center gap-1.5 px-2.5 text-sm tracking-tightish',
+                'transition-colors duration-moderate ease-swift-out',
+                active
+                  ? 'text-ink-1 font-medium'
+                  : 'text-ink-3 hover:text-ink-1',
               )}
             >
-              <I className="h-3.5 w-3.5" />
+              <I
+                className={cn(
+                  'h-3.5 w-3.5 transition-all duration-moderate ease-swift-out',
+                  active ? 'text-accent scale-110' : 'group-hover:text-ink-2',
+                )}
+              />
               <span>{t.label}</span>
-              {active && (
-                <span
-                  aria-hidden
-                  className="absolute inset-x-1 -bottom-px h-px bg-accent"
-                />
-              )}
             </button>
           );
         })}

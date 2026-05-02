@@ -1,0 +1,46 @@
+{
+  "title": "RSC 负载分步查看",
+  "subtitle": "Flight 线格式 · 流式重建",
+  "tabs": {
+    "live": "实时",
+    "waterfall": "瀑布",
+    "boundaries": "边界",
+    "snapshots": "快照 ({count})",
+    "diff": "差异"
+  },
+  "source": {
+    "mock": "模拟",
+    "live": "实时"
+  },
+  "buttons": {
+    "fetch": "获取",
+    "capture": "捕获 ({count})",
+    "replay": "重放",
+    "batch": "批处理",
+    "export": "导出",
+    "import": "导入"
+  },
+  "auto": {
+    "label": "自动",
+    "off": "关闭",
+    "focus": "焦点",
+    "interval": "5秒"
+  },
+  "footer": {
+    "chunks": "块: {count}",
+    "visible": "可见: {count}",
+    "total": "总计: {ms}ms",
+    "size": "大小: {bytes}B"
+  },
+  "boundary": {
+    "title": "Suspense 边界 {count}",
+    "totalWait": "总等待 {ms}ms",
+    "slowest": "最慢 {ms}ms",
+    "empty": "此流中无 Suspense 边界",
+    "emptyHint": "获取路由以查看 Suspense 边界"
+  },
+  "waterfall": {
+    "emptyHint": "获取路由以查看块瀑布",
+    "chunkLabel": "块"
+  }
+}

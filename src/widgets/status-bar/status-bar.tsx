@@ -7,6 +7,9 @@ import { useLastTraceStore } from '@entities/rsc-payload';
 import { Kbd } from '@shared/ui';
 import { ConfidenceDot, RenderingChip, CostChip, SeverityDot } from '@shared/ui';
 import { Icon } from '@shared/ui';
+import { cn } from '@shared/lib/cn';
+import { useT } from '@shared/i18n';
+import { LocaleChip } from '@features/locale-switcher';
 import {
   useRunnerStore,
   useBuildStatus,
@@ -21,6 +24,7 @@ export function StatusBar() {
   const diagnostics = useDiagnosticStore((s) => s.diagnostics);
   const setBottomTab = useUiStore((s) => s.setBottomTab);
   const openOverlay = useUiStore((s) => s.openOverlay);
+  const t = useT('status');
 
   // Live build / typecheck / lint / test status (Phase 3 runner).
   const ensureWired = useRunnerStore((s) => s.ensureWired);
@@ -43,12 +47,12 @@ export function StatusBar() {
   return (
     <footer
       role="contentinfo"
-      className="flex h-6 shrink-0 items-center gap-3 hairline-t bg-bg-subtle px-3 text-[11px] text-ink-2"
+      className="flex h-6 shrink-0 items-center gap-3 hairline-t bg-bg-subtle px-3 text-[11px] text-ink-2 nums-tabular select-none"
     >
       {route ? (
         <>
           <button
-            className="flex items-center gap-1.5 hover:text-ink-1"
+            className="mi-press flex items-center gap-1.5 rounded px-1 -mx-1 transition-colors duration-snappy hover:text-ink-1 hover:bg-bg-hover/60"
             aria-label="Route classification"
           >
             <RenderingChip
@@ -56,11 +60,11 @@ export function StatusBar() {
               confidence={route.renderingConfidence}
               showQuestion
             />
-            <span className="font-mono text-ink-2">{route.path}</span>
+            <span className="font-mono text-ink-2 tracking-tightish">{route.path}</span>
           </button>
           <div className="h-3 w-px bg-line" aria-hidden />
           <button
-            className="flex items-center gap-1 hover:text-ink-1"
+            className="mi-press flex items-center gap-1 rounded px-1 -mx-1 transition-colors duration-snappy hover:text-ink-1 hover:bg-bg-hover/60"
             aria-label="Cost class"
           >
             <CostChip cost={route.costClass} />
@@ -70,7 +74,7 @@ export function StatusBar() {
               <div className="h-3 w-px bg-line" aria-hidden />
               <span className="flex items-center gap-1 text-sem-client">
                 <Icon.Hex className="h-3 w-3" />
-                client {route.clientKb}KB
+                {t('client', { kb: route.clientKb })}
               </span>
             </>
           )}
@@ -78,13 +82,13 @@ export function StatusBar() {
             <>
               <div className="h-3 w-px bg-line" aria-hidden />
               <span className="truncate text-ink-3">
-                tags: {route.cacheTags.join(', ')}
+                {t('tags', { list: route.cacheTags.join(', ') })}
               </span>
             </>
           )}
         </>
       ) : (
-        <span className="text-ink-3">{file ?? 'no file'}</span>
+        <span className="text-ink-3">{file ?? t('noFile')}</span>
       )}
 
       <div className="ml-auto flex items-center gap-3">
@@ -131,16 +135,17 @@ export function StatusBar() {
           type="button"
           onClick={() => openOverlay('aiPanel')}
           className="flex items-center gap-1 hover:text-ink-1"
-          aria-label="Open Quanta AI"
+          aria-label={t('openAi')}
           title="Quanta AI — Probe + AST aware assistant"
         >
-          <span className="text-[10px] uppercase tracking-caps text-ink-3">ai</span>
+          <span className="text-[10px] uppercase tracking-caps text-ink-3">{t('ai')}</span>
         </button>
         <ProbeChip />
+        <LocaleChip />
         <button
           className="flex items-center gap-1 hover:text-ink-1"
           onClick={() => setBottomTab('problems')}
-          aria-label="Problems for this file"
+          aria-label={t('problemsForFile')}
         >
           {errCount > 0 && (
             <span className="flex items-center gap-1 text-sev-err">
@@ -158,7 +163,7 @@ export function StatusBar() {
             </span>
           )}
           {errCount + warnCount + hintCount === 0 && (
-            <span className="text-sem-static">no risks</span>
+            <span className="text-sem-static">{t('noRisks')}</span>
           )}
         </button>
 
@@ -171,7 +176,7 @@ export function StatusBar() {
 
         <button
           className="flex items-center gap-1 hover:text-ink-1"
-          aria-label="Quick fix"
+          aria-label={t('quickFix')}
         >
           <Kbd>⌘</Kbd>
           <Kbd>.</Kbd>
@@ -179,7 +184,7 @@ export function StatusBar() {
         <button
           className="flex items-center gap-1 hover:text-ink-1"
           onClick={() => openOverlay('commandPalette')}
-          aria-label="Command palette"
+          aria-label={t('commandPalette')}
         >
           <Kbd>⌘</Kbd>
           <Kbd>⇧</Kbd>
@@ -239,21 +244,29 @@ function RunnerChip(props: {
       onClick={onClick}
       title={title}
       aria-label={title}
-      className="flex items-center gap-1 hover:text-ink-1"
+      className="mi-press flex items-center gap-1 rounded px-1 -mx-1 transition-colors duration-snappy hover:text-ink-1 hover:bg-bg-hover/60"
     >
       <span className="text-[10px] uppercase tracking-caps text-ink-3">{label}</span>
-      <span className={`font-mono ${tone}`}>{glyph}</span>
+      <span
+        className={cn(
+          'font-mono nums-tabular',
+          tone,
+          state === 'running' && 'animate-pulse',
+        )}
+      >
+        {glyph}
+      </span>
       {durationMs != null && state === 'succeeded' && (
-        <span className="font-mono text-ink-3">{(durationMs / 1000).toFixed(1)}s</span>
+        <span className="font-mono text-ink-3 nums-tabular">{(durationMs / 1000).toFixed(1)}s</span>
       )}
       {count != null && count > 0 && (
-        <span className="font-mono text-sev-err">{count}</span>
+        <span className="font-mono text-sev-err nums-tabular">{count}</span>
       )}
       {warnCount != null && warnCount > 0 && (
-        <span className="font-mono text-sev-warn">{warnCount}</span>
+        <span className="font-mono text-sev-warn nums-tabular">{warnCount}</span>
       )}
       {okCount != null && okCount > 0 && (
-        <span className="font-mono text-sem-static">{okCount}</span>
+        <span className="font-mono text-sem-static nums-tabular">{okCount}</span>
       )}
     </button>
   );
@@ -270,37 +283,41 @@ function ProbeChip() {
   const url = useLastTraceStore((s) => s.url);
   const chunks = useLastTraceStore((s) => s.chunks);
   const openOverlay = useUiStore((s) => s.openOverlay);
+  const t = useT('status');
   const active = !!url && chunks.length > 0;
   return (
     <span className="flex items-center gap-1">
       <button
         type="button"
         onClick={() => openOverlay('rscPayloadStep')}
-        className="flex items-center gap-1 hover:text-ink-1"
-        aria-label="Quanta Probe status"
+        className="mi-press flex items-center gap-1 rounded px-1 -mx-1 transition-colors duration-snappy hover:text-ink-1 hover:bg-bg-hover/60"
+        aria-label={t('probe')}
         title={
           active
-            ? `Quanta Probe: ${chunks.length} chunks captured from ${url}`
-            : 'Quanta Probe: no RSC trace yet — click to capture'
+            ? t('probeTitleActive', { count: chunks.length, url })
+            : t('probeTitleIdle')
         }
       >
         <span
           aria-hidden
-          className={`h-1.5 w-1.5 rounded-full ${active ? 'bg-accent' : 'bg-ink-3'}`}
+          className={cn(
+            'h-1.5 w-1.5 rounded-full transition-colors',
+            active ? 'bg-accent mi-pulse-ring' : 'bg-ink-3',
+          )}
         />
-        <span className="text-[10px] uppercase tracking-caps text-ink-3">probe</span>
+        <span className="text-[10px] uppercase tracking-caps text-ink-3">{t('probe')}</span>
         {active ? (
-          <span className="font-mono text-ink-2">{chunks.length}</span>
+          <span className="font-mono text-ink-2 nums-tabular">{chunks.length}</span>
         ) : (
-          <span className="text-ink-3">idle</span>
+          <span className="text-ink-3">{t('probeIdle')}</span>
         )}
       </button>
       <button
         type="button"
         onClick={() => openOverlay('probeInfo')}
-        aria-label="What is Quanta Probe?"
-        title="What is Quanta Probe?"
-        className="flex h-3 w-3 items-center justify-center rounded-full border border-line text-[8px] text-ink-3 hover:border-accent hover:text-accent"
+        aria-label={t('probeWhatIs')}
+        title={t('probeWhatIs')}
+        className="flex h-3 w-3 items-center justify-center rounded-full border border-line text-[8px] text-ink-3 transition-all duration-snappy ease-spring hover:scale-125 hover:border-accent hover:text-accent"
       >
         ?
       </button>

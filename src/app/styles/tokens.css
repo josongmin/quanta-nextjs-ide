@@ -234,4 +234,509 @@ html, body, #root {
     text-decoration: underline wavy hsl(var(--warn)) 1px;
     text-underline-offset: 3px;
   }
+
+  /* Ghost annotations rendered after the line via Monaco's `after` decorator.
+     Subtle by default so they don't shout, then ramp up on line hover.    */
+  .nss-ghost-after {
+    color: hsl(var(--ink-3, var(--text-3)));
+    color: hsl(var(--text-3));
+    font-style: italic;
+    font-size: 11px;
+    opacity: 0.55;
+    transition: opacity 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  /* When the editor view-line is hovered, lift the ghost. (Monaco gives the
+     parent a `:hover` we can chain off of.) */
+  .view-line:hover .nss-ghost-after {
+    opacity: 1;
+  }
+
+  /* View-zone rendered by InlineLenses — gives a hairline + soft surface so
+     the inline route/action/client banners read as separate from the code. */
+  .nss-lens-zone {
+    background: linear-gradient(
+      to right,
+      hsl(var(--bg-subtle) / 0.0) 0px,
+      hsl(var(--bg-subtle) / 0.45) 80px,
+      hsl(var(--bg-subtle) / 0.45) 100%
+    );
+    border-top: 1px solid hsl(var(--border-faint));
+    border-bottom: 1px solid hsl(var(--border-faint));
+  }
+  .nss-lens-zone:hover {
+    background: linear-gradient(
+      to right,
+      hsl(var(--bg-subtle) / 0.0) 0px,
+      hsl(var(--bg-hover) / 0.7) 80px,
+      hsl(var(--bg-hover) / 0.7) 100%
+    );
+  }
+
+  /* ─── Phase 16 — Live Route Spec viewzone ─────────────────────────── */
+  .nss-route-spec-zone {
+    background: transparent;
+  }
+  .route-spec-enter {
+    animation: route-spec-fade-in 160ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+  .route-spec-stagger {
+    animation: route-spec-fade-in 200ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes route-spec-fade-in {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Sunset (warm light) — soft rose / amber, late-afternoon feel
+───────────────────────────────────────────────────────────── */
+[data-theme="sunset"] {
+  --bg: 24 100% 98%;
+  --bg-subtle: 22 80% 96%;
+  --bg-hover: 18 75% 93%;
+  --bg-selected: 14 95% 91%;
+  --bg-active: 14 95% 86%;
+
+  --border: 18 35% 86%;
+  --border-strong: 18 28% 72%;
+  --border-faint: 22 50% 93%;
+
+  --text: 14 25% 16%;
+  --text-2: 14 18% 36%;
+  --text-3: 18 15% 56%;
+  --text-link: 14 80% 45%;
+
+  --accent: 14 80% 50%;
+  --accent-soft: 14 95% 92%;
+
+  --err: 358 70% 48%;
+  --err-soft: 358 80% 95%;
+  --warn: 28 85% 46%;
+  --warn-soft: 38 95% 93%;
+  --info: 199 65% 42%;
+  --info-soft: 204 90% 95%;
+  --hint: 18 12% 48%;
+
+  --sem-static: 152 50% 36%;
+  --sem-static-soft: 152 60% 92%;
+  --sem-isr: 217 70% 50%;
+  --sem-isr-soft: 217 80% 94%;
+  --sem-dynamic: 14 80% 50%;
+  --sem-dynamic-soft: 14 90% 93%;
+  --sem-edge: 280 60% 56%;
+  --sem-edge-soft: 280 75% 94%;
+  --sem-client: 330 65% 52%;
+  --sem-client-soft: 330 75% 94%;
+  --sem-server: 199 70% 48%;
+  --sem-server-soft: 199 80% 94%;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Dark (modern, neutral) — Linear / Vercel inspired
+───────────────────────────────────────────────────────────── */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: 220 14% 10%;          /* near-black neutral */
+  --bg-subtle: 220 13% 13%;
+  --bg-hover: 220 12% 17%;
+  --bg-selected: 244 35% 22%;
+  --bg-active: 244 50% 28%;
+
+  --border: 220 10% 22%;
+  --border-strong: 220 10% 32%;
+  --border-faint: 220 10% 16%;
+
+  --text: 210 15% 95%;
+  --text-2: 220 8% 70%;
+  --text-3: 220 6% 50%;
+  --text-link: 244 90% 75%;
+
+  --accent: 244 85% 70%;
+  --accent-soft: 244 50% 22%;
+
+  --err: 0 70% 65%;
+  --err-soft: 0 50% 22%;
+  --warn: 32 90% 60%;
+  --warn-soft: 32 50% 22%;
+  --info: 199 80% 60%;
+  --info-soft: 199 50% 22%;
+  --hint: 220 8% 60%;
+
+  --sem-static: 142 60% 55%;
+  --sem-static-soft: 142 50% 18%;
+  --sem-isr: 217 80% 65%;
+  --sem-isr-soft: 217 50% 22%;
+  --sem-dynamic: 32 90% 62%;
+  --sem-dynamic-soft: 32 50% 22%;
+  --sem-edge: 262 75% 70%;
+  --sem-edge-soft: 262 50% 22%;
+  --sem-client: 330 75% 65%;
+  --sem-client-soft: 330 50% 22%;
+  --sem-server: 199 80% 60%;
+  --sem-server-soft: 199 50% 22%;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Midnight (deep indigo) — late-night focus mode
+───────────────────────────────────────────────────────────── */
+[data-theme="midnight"] {
+  color-scheme: dark;
+  --bg: 230 35% 8%;
+  --bg-subtle: 232 32% 11%;
+  --bg-hover: 234 28% 15%;
+  --bg-selected: 244 55% 24%;
+  --bg-active: 244 65% 32%;
+
+  --border: 234 24% 22%;
+  --border-strong: 234 22% 32%;
+  --border-faint: 234 24% 16%;
+
+  --text: 235 30% 96%;
+  --text-2: 234 18% 76%;
+  --text-3: 234 14% 56%;
+  --text-link: 250 95% 78%;
+
+  --accent: 250 90% 72%;
+  --accent-soft: 250 60% 24%;
+
+  --err: 348 75% 68%;
+  --err-soft: 348 50% 24%;
+  --warn: 38 95% 65%;
+  --warn-soft: 38 55% 24%;
+  --info: 195 85% 65%;
+  --info-soft: 195 55% 24%;
+  --hint: 234 16% 60%;
+
+  --sem-static: 152 65% 58%;
+  --sem-static-soft: 152 55% 20%;
+  --sem-isr: 220 90% 70%;
+  --sem-isr-soft: 220 55% 24%;
+  --sem-dynamic: 38 95% 66%;
+  --sem-dynamic-soft: 38 55% 24%;
+  --sem-edge: 270 85% 76%;
+  --sem-edge-soft: 270 55% 26%;
+  --sem-client: 322 80% 70%;
+  --sem-client-soft: 322 55% 26%;
+  --sem-server: 195 85% 64%;
+  --sem-server-soft: 195 55% 24%;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Terminal (phosphor green on near-black) — hacker chic
+───────────────────────────────────────────────────────────── */
+[data-theme="terminal"] {
+  color-scheme: dark;
+  --bg: 140 18% 6%;
+  --bg-subtle: 140 16% 9%;
+  --bg-hover: 140 14% 13%;
+  --bg-selected: 140 50% 18%;
+  --bg-active: 140 60% 24%;
+
+  --border: 140 14% 22%;
+  --border-strong: 140 14% 32%;
+  --border-faint: 140 14% 14%;
+
+  --text: 130 60% 88%;
+  --text-2: 130 30% 68%;
+  --text-3: 130 20% 50%;
+  --text-link: 130 80% 70%;
+
+  --accent: 130 80% 60%;
+  --accent-soft: 130 50% 16%;
+
+  --err: 0 75% 65%;
+  --err-soft: 0 50% 22%;
+  --warn: 50 95% 60%;
+  --warn-soft: 50 55% 22%;
+  --info: 180 80% 60%;
+  --info-soft: 180 55% 20%;
+  --hint: 130 16% 56%;
+
+  --sem-static: 130 80% 60%;
+  --sem-static-soft: 130 50% 16%;
+  --sem-isr: 200 85% 60%;
+  --sem-isr-soft: 200 50% 18%;
+  --sem-dynamic: 50 95% 60%;
+  --sem-dynamic-soft: 50 50% 18%;
+  --sem-edge: 280 80% 70%;
+  --sem-edge-soft: 280 50% 22%;
+  --sem-client: 320 80% 65%;
+  --sem-client-soft: 320 50% 22%;
+  --sem-server: 180 85% 58%;
+  --sem-server-soft: 180 50% 20%;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Dim (warm dark) — softer than `dark`, easy on eyes for long sessions
+───────────────────────────────────────────────────────────── */
+[data-theme="dim"] {
+  color-scheme: dark;
+  --bg: 28 12% 14%;
+  --bg-subtle: 28 11% 17%;
+  --bg-hover: 28 10% 21%;
+  --bg-selected: 30 30% 26%;
+  --bg-active: 30 40% 32%;
+
+  --border: 28 10% 26%;
+  --border-strong: 28 10% 36%;
+  --border-faint: 28 10% 20%;
+
+  --text: 30 12% 92%;
+  --text-2: 28 8% 70%;
+  --text-3: 28 6% 52%;
+  --text-link: 28 80% 70%;
+
+  --accent: 28 75% 64%;
+  --accent-soft: 28 40% 24%;
+
+  --err: 0 65% 64%;
+  --err-soft: 0 40% 24%;
+  --warn: 32 80% 58%;
+  --warn-soft: 32 45% 24%;
+  --info: 199 65% 60%;
+  --info-soft: 199 40% 24%;
+  --hint: 28 10% 56%;
+
+  --sem-static: 142 50% 56%;
+  --sem-static-soft: 142 40% 22%;
+  --sem-isr: 217 70% 64%;
+  --sem-isr-soft: 217 40% 24%;
+  --sem-dynamic: 32 80% 60%;
+  --sem-dynamic-soft: 32 45% 24%;
+  --sem-edge: 262 60% 70%;
+  --sem-edge-soft: 262 45% 26%;
+  --sem-client: 330 60% 64%;
+  --sem-client-soft: 330 45% 26%;
+  --sem-server: 199 70% 58%;
+  --sem-server-soft: 199 45% 24%;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Theme transition — fade colors smoothly (250ms) when [data-theme]
+   changes. Skipped while user is typing in inputs to avoid jank.
+───────────────────────────────────────────────────────────── */
+html[data-theme-transition="true"],
+html[data-theme-transition="true"] * {
+  transition:
+    background-color 250ms ease,
+    border-color 250ms ease,
+    color 250ms ease,
+    fill 250ms ease,
+    stroke 250ms ease !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Subtle texture for dark themes — barely-visible noise so flat
+   surfaces don't look plasticky.
+───────────────────────────────────────────────────────────── */
+[data-theme="dark"] body,
+[data-theme="midnight"] body,
+[data-theme="terminal"] body,
+[data-theme="dim"] body {
+  background-image:
+    radial-gradient(hsl(var(--border-faint) / 0.4) 1px, transparent 1px);
+  background-size: 3px 3px;
+  background-position: 0 0;
+  background-attachment: fixed;
+}
+
+/* Glassmorphism utility — for popovers, command palette, theme switcher */
+@layer utilities {
+  .glass {
+    background: hsl(var(--bg-subtle) / 0.72);
+    backdrop-filter: saturate(140%) blur(18px);
+    -webkit-backdrop-filter: saturate(140%) blur(18px);
+    border: 1px solid hsl(var(--border) / 0.7);
+  }
+  .glass-strong {
+    background: hsl(var(--bg) / 0.85);
+    backdrop-filter: saturate(160%) blur(24px);
+    -webkit-backdrop-filter: saturate(160%) blur(24px);
+    border: 1px solid hsl(var(--border));
+  }
+  .gradient-accent {
+    background-image: linear-gradient(
+      135deg,
+      hsl(var(--accent)) 0%,
+      hsl(var(--sem-edge)) 50%,
+      hsl(var(--sem-client)) 100%
+    );
+  }
+  .text-gradient-accent {
+    background-image: linear-gradient(
+      135deg,
+      hsl(var(--accent)),
+      hsl(var(--sem-edge))
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* ─── Micro-interaction primitives ─────────────────────────
+     These are tiny, composable utilities. Apply wherever a
+     button/tab/chip needs to feel alive without going gimmicky.
+  ────────────────────────────────────────────────────────── */
+
+  /* Button: subtle press-down + tonal feedback. 80ms in, 220ms out. */
+  .mi-press {
+    transition:
+      transform 80ms cubic-bezier(0.4, 0, 0.6, 1),
+      background-color 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      color 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+  .mi-press:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+  .mi-press:hover:not(:disabled) {
+    transform: translateY(-0.5px);
+  }
+  .mi-press:active:not(:disabled):hover {
+    transform: scale(0.97) translateY(0);
+  }
+
+  /* Sliding underline indicator for active tab/menu items.
+     Pair with [data-active="true"] for the visible state. */
+  .mi-underline {
+    position: relative;
+  }
+  .mi-underline::after {
+    content: '';
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: -1px;
+    height: 1.5px;
+    background: hsl(var(--accent));
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .mi-underline[data-active='true']::after,
+  .mi-underline[aria-current='true']::after,
+  .mi-underline[aria-selected='true']::after {
+    transform: scaleX(1);
+  }
+
+  /* Hover-grow for the underline on inactive items (preview hint). */
+  .mi-underline:hover::after {
+    transform: scaleX(0.45);
+    opacity: 0.6;
+  }
+  .mi-underline[data-active='true']:hover::after {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+
+  /* Chip — soft tonal lift on hover. */
+  .mi-chip {
+    transition:
+      background-color 180ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 180ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    will-change: transform;
+  }
+  .mi-chip:hover {
+    transform: translateY(-1px);
+  }
+
+  /* Card hover-lift — for any clickable surface. */
+  .mi-card {
+    transition:
+      transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .mi-card:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 1px 2px hsl(var(--text) / 0.04),
+      0 14px 36px hsl(var(--text) / 0.10);
+    border-color: hsl(var(--border-strong));
+  }
+
+  /* Sliding ring focus — replaces hard outline with a smooth ring. */
+  .mi-focus-ring:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px hsl(var(--bg)),
+      0 0 0 3.5px hsl(var(--accent) / 0.85);
+    transition: box-shadow 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Skeleton shimmer */
+  .mi-shimmer {
+    background-image: linear-gradient(
+      90deg,
+      hsl(var(--bg-subtle)) 0%,
+      hsl(var(--bg-hover)) 40%,
+      hsl(var(--bg-subtle)) 80%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.4s linear infinite;
+  }
+
+  /* Pulse ring — for "live"/"active" indicators. */
+  .mi-pulse-ring {
+    animation: pulse-ring 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  /* Numeric tabular — perfect column alignment for stats. */
+  .nums-tabular {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1, 'cv11' 1;
+  }
+
+  /* Hairline divider with gradient fade ends */
+  .hairline-fade-x {
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      hsl(var(--border)) 12%,
+      hsl(var(--border)) 88%,
+      transparent 100%
+    );
+    height: 1px;
+  }
+  .hairline-fade-y {
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      hsl(var(--border)) 12%,
+      hsl(var(--border)) 88%,
+      transparent 100%
+    );
+    width: 1px;
+  }
+
+  /* Header shadow that appears only when content scrolls beneath. */
+  .mi-sticky-shadow {
+    transition: box-shadow 200ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .mi-sticky-shadow[data-scrolled='true'] {
+    box-shadow:
+      0 1px 0 hsl(var(--border)),
+      0 6px 12px -8px hsl(var(--text) / 0.08);
+  }
+}
+
+/* Reduce motion respectfully */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  .mi-press:active:not(:disabled),
+  .mi-press:hover:not(:disabled),
+  .mi-card:hover,
+  .mi-chip:hover {
+    transform: none !important;
+  }
 }

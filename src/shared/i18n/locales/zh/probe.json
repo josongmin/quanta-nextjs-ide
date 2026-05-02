@@ -1,0 +1,46 @@
+{
+  "title": "Quanta Probe",
+  "subtitle": "真实的 RSC 流捕获、解析器和跨界面分发",
+  "currentStatus": "当前状态",
+  "active": "活动",
+  "idle": "空闲",
+  "noTrace": "尚未捕获 RSC 跟踪。",
+  "captured": "{count} 个块 · {bytes}B",
+  "whatIs": {
+    "heading": "什么是 Probe?",
+    "body": "Probe 是 IDE 内的 RSC 捕获系统。它获取 Next.js 路由的 React Flight 负载,解析每个块,并与每个能读取它的面板共享分析结果 — 无需打开 6 个不同的覆盖层。"
+  },
+  "howTo": {
+    "heading": "如何捕获",
+    "step1": "打开 RSC 负载分步覆盖层",
+    "step2": "切换到实时,粘贴路由 URL (例如 /__rsc/products/walnut-table)",
+    "step3": "点击获取 — 下面列出的所有界面会自动更新"
+  },
+  "where": {
+    "heading": "Probe 数据出现的地方",
+    "items": [
+      "RSC 负载分步 (实时、瀑布、边界)",
+      "快照 + 差异 (捕获和比较)",
+      "路由标签 (probe 横幅)",
+      "孤岛标签 (真实客户端模块)",
+      "Bundle & Vitals → RSC 视图",
+      "仅服务器跟踪器 (横幅)",
+      "缓存血统 (横幅)",
+      "流式可视化 (横幅)",
+      "问题 (客户端泄漏诊断)",
+      "状态栏 (Probe 芯片)"
+    ]
+  },
+  "roadmap": {
+    "heading": "下一步计划",
+    "soon": "即将",
+    "later": "稍后",
+    "autoAttach": "自动附加加载器,IDE 自动将 Probe 注入您的 next dev 进程",
+    "ws": "WebSocket 推送: 实时捕获每次页面导航,带源映射",
+    "ci": "CI 模式: 批量捕获所有路由,将 bundle 差异发布到 PR"
+  },
+  "footer": {
+    "version": "v0 · 插件前 · 仅外部 fetch",
+    "openRsc": "打开 RSC 负载分步 →"
+  }
+}

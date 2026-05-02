@@ -9,6 +9,7 @@ import {
   type RscChunk,
 } from '@entities/rsc-payload';
 import type { SourceConfig, SourceKind } from '@shared/rsc-sources';
+import { useT } from '@shared/i18n';
 import { OverlayPanel } from '@shared/ui';
 import { usePayloadStream } from './model/usePayloadStream';
 import { useSnapshotsStore } from './model/snapshots.store';
@@ -40,6 +41,7 @@ interface RecordedTrace {
 export function RscPayloadStepOverlay() {
   const open = useUiStore((s) => s.overlays.rscPayloadStep.open);
   const close = useUiStore((s) => s.closeOverlay);
+  const t = useT('rsc');
 
   const [sourceKind, setSourceKind] = useState<SourceKind>('mock');
   const [url, setUrl] = useState<string>(() => readStoredUrl());
@@ -249,8 +251,8 @@ export function RscPayloadStepOverlay() {
     <OverlayPanel
       open={open}
       onOpenChange={(v) => !v && close('rscPayloadStep')}
-      title="RSC payload step-through"
-      subtitle="Flight wire format · streaming reconstruction"
+      title={t('title')}
+      subtitle={t('subtitle')}
       size="xl"
       footer={
         <FooterBar

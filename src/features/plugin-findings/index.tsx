@@ -3,6 +3,7 @@ import { useUiStore } from '@entities/ui-shell';
 import { useLastTraceStore } from '@entities/rsc-payload';
 import { useCodeGraphStore } from '@entities/code-graph';
 import { runAllPlugins, listPlugins } from '@shared/plugins';
+import { useT } from '@shared/i18n';
 import { Chip, OverlayPanel, ScrollArea } from '@shared/ui';
 
 /**
@@ -22,22 +23,23 @@ export function PluginFindingsOverlay() {
     () => runAllPlugins({ url, chunks, files }),
     [url, chunks, files],
   );
+  const t = useT('plugins');
 
   return (
     <OverlayPanel
       open={!!open}
       onOpenChange={(o) => (o ? null : close('pluginFindings'))}
-      title="Plugin findings"
-      subtitle={`${plugins.length} plugin(s) · ${findings.length} finding(s)`}
+      title={t('title')}
+      subtitle={t('subtitle', { plugins: plugins.length, findings: findings.length })}
       width={680}
     >
       <div className="hairline-b bg-bg-subtle px-3 py-2 text-[11px] text-ink-3">
-        Registered: {plugins.map((p) => p.id).join(', ') || '(none)'}
+        {t('registered', { list: plugins.map((p) => p.id).join(', ') || t('none') })}
       </div>
       <ScrollArea className="h-[420px]">
         {findings.length === 0 ? (
           <div className="px-3 py-6 text-center text-xs text-ink-3">
-            No findings. Capture a Probe trace and the registered plugins will scan it.
+            {t('empty')}
           </div>
         ) : (
           <div className="divide-y divide-line/70">
@@ -53,7 +55,7 @@ export function PluginFindingsOverlay() {
                   }
                   size="xs"
                 >
-                  {f.severity}
+                  {t(`severity.${f.severity}`)}
                 </Chip>
                 <div className="min-w-0 flex-1">
                   <div className="font-mono text-ink-1">{f.ruleId}</div>

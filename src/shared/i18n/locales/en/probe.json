@@ -1,0 +1,46 @@
+{
+  "title": "Quanta Probe",
+  "subtitle": "Real RSC stream capture, parser, and cross-surface fan-out",
+  "currentStatus": "current status",
+  "active": "active",
+  "idle": "idle",
+  "noTrace": "No RSC trace captured yet.",
+  "captured": "{count, plural, =1 {1 chunk} other {# chunks}} · {bytes}B",
+  "whatIs": {
+    "heading": "What is Probe?",
+    "body": "Probe is the RSC capture system inside the IDE. It fetches a Next.js route's React Flight payload, parses each chunk, and shares the analysis with every panel that knows how to read it — without you opening 6 different overlays."
+  },
+  "howTo": {
+    "heading": "How to capture",
+    "step1": "Open RSC payload step overlay",
+    "step2": "Switch to Live, paste a route URL (e.g. /__rsc/products/walnut-table)",
+    "step3": "Click Fetch — every surface listed below updates automatically"
+  },
+  "where": {
+    "heading": "Where Probe data appears",
+    "items": [
+      "RSC payload step (Live, Waterfall, Boundaries)",
+      "Snapshots + Diff (capture & compare)",
+      "Routes tab (probe banner)",
+      "Islands tab (real client modules)",
+      "Bundle & Vitals → RSC view",
+      "Server-only tracker (banner)",
+      "Cache lineage (banner)",
+      "Streaming visualizer (banner)",
+      "Problems (client-leak diagnostic)",
+      "Status bar (Probe chip)"
+    ]
+  },
+  "roadmap": {
+    "heading": "What's next (roadmap)",
+    "soon": "soon",
+    "later": "later",
+    "autoAttach": "Auto-attach loader so the IDE injects Probe into your next dev process automatically",
+    "ws": "WebSocket push: capture every page navigation in real time, with source maps",
+    "ci": "CI mode: batch-capture all routes, post bundle delta to PR"
+  },
+  "footer": {
+    "version": "v0 · pre-plugin · external fetch only",
+    "openRsc": "Open RSC payload step →"
+  }
+}

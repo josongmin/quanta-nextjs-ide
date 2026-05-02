@@ -1,0 +1,46 @@
+{
+  "title": "Quanta Probe",
+  "subtitle": "실제 RSC 스트림 캡처, 파서, 그리고 크로스-서피스 팬아웃",
+  "currentStatus": "현재 상태",
+  "active": "활성",
+  "idle": "대기",
+  "noTrace": "아직 캡처된 RSC 추적 없음.",
+  "captured": "청크 {count}개 · {bytes}B",
+  "whatIs": {
+    "heading": "Probe란?",
+    "body": "Probe는 IDE 내부의 RSC 캡처 시스템입니다. Next.js 라우트의 React Flight 페이로드를 가져와서 각 청크를 파싱하고, 분석 결과를 읽을 수 있는 모든 패널과 공유합니다 — 6개 오버레이를 따로 열 필요 없이."
+  },
+  "howTo": {
+    "heading": "캡처 방법",
+    "step1": "RSC 페이로드 단계 오버레이 열기",
+    "step2": "Live로 전환 후 라우트 URL 붙여넣기 (예: /__rsc/products/walnut-table)",
+    "step3": "Fetch 클릭 — 아래 모든 서피스가 자동 업데이트됨"
+  },
+  "where": {
+    "heading": "Probe 데이터가 나타나는 곳",
+    "items": [
+      "RSC 페이로드 단계 (Live, 워터폴, 경계)",
+      "스냅샷 + 비교 (캡처 & 비교)",
+      "라우트 탭 (probe 배너)",
+      "아일랜드 탭 (실제 클라이언트 모듈)",
+      "번들 & 바이탈 → RSC 뷰",
+      "서버 전용 추적기 (배너)",
+      "캐시 계보 (배너)",
+      "스트리밍 시각화 (배너)",
+      "문제 (클라이언트 누출 진단)",
+      "상태 표시줄 (Probe 칩)"
+    ]
+  },
+  "roadmap": {
+    "heading": "다음 계획",
+    "soon": "곧",
+    "later": "나중",
+    "autoAttach": "자동 연결 로더 — IDE가 next dev 프로세스에 Probe를 자동 주입",
+    "ws": "WebSocket 푸시: 모든 페이지 내비게이션을 실시간 캡처, 소스맵 포함",
+    "ci": "CI 모드: 모든 라우트 일괄 캡처, PR에 번들 변화 게시"
+  },
+  "footer": {
+    "version": "v0 · 플러그인 이전 · 외부 fetch만",
+    "openRsc": "RSC 페이로드 단계 열기 →"
+  }
+}

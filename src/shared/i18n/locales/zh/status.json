@@ -1,0 +1,16 @@
+{
+  "noFile": "无文件",
+  "noRisks": "无风险",
+  "problemsForFile": "此文件的问题",
+  "quickFix": "快速修复",
+  "commandPalette": "命令面板",
+  "openAi": "打开 Quanta AI",
+  "ai": "AI",
+  "probe": "探针",
+  "probeIdle": "空闲",
+  "probeTitleIdle": "Quanta Probe: 尚无 RSC 跟踪 — 点击捕获",
+  "probeTitleActive": "Quanta Probe: 从 {url} 捕获了 {count} 个块",
+  "probeWhatIs": "什么是 Quanta Probe?",
+  "client": "客户端 {kb}KB",
+  "tags": "标签: {list}"
+}

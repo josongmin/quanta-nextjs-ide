@@ -57,7 +57,10 @@ export interface NssCommandSpec {
   /** Marker so the executor in index.tsx can dispatch to real store actions. */
   action:
     | { kind: 'toast'; message: string }
-    | { kind: 'open-overlay'; key: 'whatIf' | 'evidenceTracer' | 'blastRadius' }
+    | {
+        kind: 'open-overlay';
+        key: 'whatIf' | 'evidenceTracer' | 'blastRadius' | 'cockpit';
+      }
     | { kind: 'set-bottom-tab'; tab: 'semantic-diff' | 'cache-lineage' | 'problems' }
     | { kind: 'set-inspector-project' }
     | { kind: 'set-left-tab'; tab: 'tags' };
@@ -282,6 +285,13 @@ export const nssCommands: NssCommandSpec[] = [
     category: 'Project',
     icon: Icon.Info,
     action: { kind: 'set-inspector-project' },
+  },
+  {
+    id: 'cmd_open_cockpit',
+    label: 'Open Cockpit — project pulse',
+    category: 'Project',
+    icon: Icon.Zap,
+    action: { kind: 'open-overlay', key: 'cockpit' },
   },
   {
     id: 'cmd_open_inspection_profile',

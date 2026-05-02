@@ -1,0 +1,14 @@
+{
+  "generic": "문제가 발생했습니다: {message}",
+  "noUrl": "URL을 입력하세요",
+  "noChunksToCapture": "캡처할 청크가 아직 없음",
+  "nothingToExport": "내보낼 것 없음 — 먼저 라우트를 가져오세요",
+  "importFailed": "가져오기 실패: {reason}",
+  "noRoutes": "라우트가 제공되지 않음",
+  "noActiveFile": "저장할 활성 파일 없음",
+  "saveFailed": "저장 실패: {message}",
+  "fetchFailed": "가져오기 실패: {status} {statusText}",
+  "noBody": "응답 본문 없음",
+  "tauriRequired": "Tauri 빌드 필요",
+  "shellUnavailable": "브라우저에서 셸 사용 불가. Tauri 빌드에서 열어주세요."
+}

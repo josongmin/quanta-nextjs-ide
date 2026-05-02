@@ -1,0 +1,43 @@
+{
+  "menu": {
+    "app": "Quanta",
+    "file": "File",
+    "edit": "Edit",
+    "view": "View",
+    "probe": "Probe",
+    "window": "Window",
+    "help": "Help",
+    "openFolder": "Open Folder…",
+    "importTrace": "Import Trace…",
+    "save": "Save",
+    "exportTrace": "Export Trace…",
+    "settings": "Settings…",
+    "commandPalette": "Command Palette…",
+    "quickOpen": "Quick Open…",
+    "toggleBottomPanel": "Toggle Bottom Panel",
+    "toggleLeftPanel": "Toggle Left Panel",
+    "openRsc": "Open RSC Payload Step",
+    "captureNow": "Capture Last Trace",
+    "openAi": "Open Quanta AI",
+    "openPlugins": "Plugin Findings",
+    "openGit": "Git Status",
+    "docs": "Quanta Docs",
+    "reportIssue": "Report Issue…"
+  },
+  "tray": {
+    "show": "Show Quanta",
+    "capture": "Capture Last Route",
+    "openRsc": "Open RSC Probe…",
+    "openAi": "Open Quanta AI…",
+    "quit": "Quit Quanta"
+  },
+  "update": {
+    "available": "Quanta {version} is ready",
+    "install": "Install + relaunch",
+    "installing": "Installing…"
+  },
+  "locale": {
+    "label": "Language",
+    "switchTo": "Switch to {name}"
+  }
+}

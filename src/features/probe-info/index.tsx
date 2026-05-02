@@ -1,5 +1,6 @@
 import { useUiStore } from '@entities/ui-shell';
 import { useLastTraceStore } from '@entities/rsc-payload';
+import { useT } from '@shared/i18n';
 import { Button, Chip, OverlayPanel } from '@shared/ui';
 
 /**
@@ -17,25 +18,24 @@ export function ProbeInfoOverlay() {
   const chunks = useLastTraceStore((s) => s.chunks);
   const totalBytes = useLastTraceStore((s) => s.totalBytes);
   const active = !!url && chunks.length > 0;
+  const t = useT('probe');
+  const tc = useT('common');
+
+  const whereItems = t('where.items') as unknown as string[] | string;
+  const items = Array.isArray(whereItems) ? whereItems : [];
 
   return (
     <OverlayPanel
       open={open}
       onOpenChange={(o) => (o ? null : close('probeInfo'))}
-      title="Quanta Probe"
-      subtitle="Real RSC stream capture, parser, and cross-surface fan-out"
+      title={t('title')}
+      subtitle={t('subtitle')}
       width={680}
       footer={
         <>
-          <span className="mr-auto text-[11px] text-ink-3">
-            v0 · pre-plugin · external fetch only
-          </span>
-          <Button
-            size="xs"
-            tone="ghost"
-            onClick={() => close('probeInfo')}
-          >
-            Close
+          <span className="mr-auto text-[11px] text-ink-3">{t('footer.version')}</span>
+          <Button size="xs" tone="ghost" onClick={() => close('probeInfo')}>
+            {tc('actions.close')}
           </Button>
           <Button
             size="xs"
@@ -45,7 +45,7 @@ export function ProbeInfoOverlay() {
               openOverlay('rscPayloadStep');
             }}
           >
-            Open RSC payload step →
+            {t('footer.openRsc')}
           </Button>
         </>
       }
@@ -57,90 +57,69 @@ export function ProbeInfoOverlay() {
             className={`h-2 w-2 rounded-full ${active ? 'bg-accent' : 'bg-ink-3'}`}
           />
           <span className="text-[10px] uppercase tracking-caps text-ink-3">
-            current status
+            {t('currentStatus')}
           </span>
           {active ? (
             <>
-              <Chip tone="accent" size="xs">active</Chip>
+              <Chip tone="accent" size="xs">{t('active')}</Chip>
               <span className="font-mono text-ink-2">{url}</span>
               <span className="text-ink-3">
-                {chunks.length} chunks · {totalBytes}B
+                {t('captured', { count: chunks.length, bytes: totalBytes })}
               </span>
             </>
           ) : (
             <>
-              <Chip tone="muted" size="xs">idle</Chip>
-              <span className="text-ink-3">No RSC trace captured yet.</span>
+              <Chip tone="muted" size="xs">{t('idle')}</Chip>
+              <span className="text-ink-3">{t('noTrace')}</span>
             </>
           )}
         </section>
 
         <section>
           <h3 className="mb-1 text-[10px] uppercase tracking-caps text-ink-3">
-            What is Probe?
+            {t('whatIs.heading')}
           </h3>
-          <p>
-            Probe is the RSC capture system inside the IDE. It fetches a
-            Next.js route's React Flight payload, parses each chunk, and shares
-            the analysis with every panel that knows how to read it — without
-            you opening 6 different overlays.
-          </p>
+          <p>{t('whatIs.body')}</p>
         </section>
 
         <section>
           <h3 className="mb-1 text-[10px] uppercase tracking-caps text-ink-3">
-            How to capture
+            {t('howTo.heading')}
           </h3>
           <ol className="ml-4 list-decimal space-y-1 text-ink-2">
-            <li>
-              Open <span className="font-mono text-ink-1">RSC payload step</span> overlay
-            </li>
-            <li>
-              Switch to <span className="font-mono text-ink-1">Live</span>, paste a route URL (e.g. <span className="font-mono text-ink-1">/__rsc/products/walnut-table</span>)
-            </li>
-            <li>
-              Click <span className="font-mono text-ink-1">Fetch</span> — every surface listed below updates automatically
-            </li>
+            <li>{t('howTo.step1')}</li>
+            <li>{t('howTo.step2')}</li>
+            <li>{t('howTo.step3')}</li>
           </ol>
         </section>
 
         <section>
           <h3 className="mb-1 text-[10px] uppercase tracking-caps text-ink-3">
-            Where Probe data appears
+            {t('where.heading')}
           </h3>
           <ul className="grid grid-cols-2 gap-1 text-ink-2">
-            <li>· RSC payload step (Live, Waterfall, Boundaries)</li>
-            <li>· Snapshots + Diff (capture &amp; compare)</li>
-            <li>· Routes tab (probe banner)</li>
-            <li>· Islands tab (real client modules)</li>
-            <li>· Bundle &amp; Vitals → RSC view</li>
-            <li>· Server-only tracker (banner)</li>
-            <li>· Cache lineage (banner)</li>
-            <li>· Streaming visualizer (banner)</li>
-            <li>· Problems (client-leak diagnostic)</li>
-            <li>· Status bar (Probe chip)</li>
+            {items.map((item, i) => (
+              <li key={i}>· {item}</li>
+            ))}
           </ul>
         </section>
 
         <section>
           <h3 className="mb-1 text-[10px] uppercase tracking-caps text-ink-3">
-            What's next (roadmap)
+            {t('roadmap.heading')}
           </h3>
           <ul className="ml-4 list-disc space-y-0.5 text-ink-2">
             <li>
-              <Chip tone="info" size="xs">soon</Chip>{' '}
-              Auto-attach loader so the IDE injects Probe into your{' '}
-              <span className="font-mono text-ink-1">next dev</span> process
-              automatically
+              <Chip tone="info" size="xs">{t('roadmap.soon')}</Chip>{' '}
+              {t('roadmap.autoAttach')}
             </li>
             <li>
-              <Chip tone="muted" size="xs">later</Chip>{' '}
-              WebSocket push: capture every page navigation in real time, with
-              source maps
+              <Chip tone="muted" size="xs">{t('roadmap.later')}</Chip>{' '}
+              {t('roadmap.ws')}
             </li>
             <li>
-              <Chip tone="muted" size="xs">later</Chip>{' '}
-              CI mode: batch-capture all routes, post bundle delta to PR
+              <Chip tone="muted" size="xs">{t('roadmap.later')}</Chip>{' '}
+              {t('roadmap.ci')}
             </li>
           </ul>
         </section>

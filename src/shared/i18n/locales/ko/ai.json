@@ -1,0 +1,38 @@
+{
+  "title": "Quanta AI",
+  "subtitle": "Probe + AST 인식 어시스턴트",
+  "ask": "질문",
+  "askPlaceholder": "무엇이든 질문하세요 (Probe + AST 컨텍스트 포함)…",
+  "thinking": "생각 중…",
+  "clear": "지우기",
+  "settings": {
+    "title": "설정",
+    "showSettings": "설정",
+    "hideSettings": "설정 숨기기",
+    "provider": "제공자",
+    "stub": "스텁",
+    "anthropic": "Anthropic",
+    "apiKey": "Anthropic API 키",
+    "apiKeyHint": "localStorage에 저장됨. 브라우저 → Anthropic 직접 호출.",
+    "noKeyFallback": "키 없음 — 스텁으로 폴백"
+  },
+  "context": {
+    "preview": "컨텍스트 미리보기",
+    "noProbe": "(Probe 추적 없음)",
+    "filesScanned": "스캔된 파일: {count}",
+    "useClient": "'use client' 파일: {count}",
+    "useServer": "'use server' 파일: {count}",
+    "declaredNotShipped": "AST엔 'use client' 있지만 Probe가 못 본 것: {count}"
+  },
+  "mode": {
+    "label": "모드",
+    "agent": "에이전트 (claude-opus-4-7)"
+  },
+  "errors": {
+    "requestFailed": "AI 요청 실패: {message}"
+  },
+  "intro": "질문해보세요: \"왜 /products가 무겁지?\" — 모든 프롬프트에 최신 Probe 추적과 AST 결과가 포함됩니다.",
+  "stub": {
+    "header": "**스텁 AI** — 실제 LLM 호출 없음. API 키를 연결해서 업그레이드하세요."
+  }
+}

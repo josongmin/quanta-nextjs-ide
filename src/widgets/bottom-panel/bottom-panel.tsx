@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { match } from 'ts-pattern';
 import { useUiStore, type BottomTab } from '@entities/ui-shell';
 import { useDiagnosticStore } from '@entities/diagnostic';
@@ -12,6 +13,12 @@ import { LiveTab } from './tabs/live-tab';
 import { OutputTab } from './tabs/output-tab';
 import { TerminalTab } from './tabs/terminal-tab';
 import { RunnerOutputPanel } from '@features/runner-output';
+import {
+  CacheStateTab,
+  LiveEventsTab,
+  TraceGraphTab,
+  registerLiveBottomTabs,
+} from '@features/live-bottom-tabs';
 
 const tabs: Array<{ key: BottomTab; label: string }> = [
   { key: 'problems', label: 'Problems' },
@@ -23,6 +30,9 @@ const tabs: Array<{ key: BottomTab; label: string }> = [
   { key: 'output', label: 'Output' },
   { key: 'terminal', label: 'Terminal' },
   { key: 'runner', label: 'Runner' },
+  { key: 'live-events', label: 'Live Events' },
+  { key: 'cache-state', label: 'Cache State' },
+  { key: 'trace-graph', label: 'Trace' },
 ];
 
 export function BottomPanel() {
@@ -30,6 +40,11 @@ export function BottomPanel() {
   const setTab = useUiStore((s) => s.setBottomTab);
   const diagCount = useDiagnosticStore((s) => s.diagnostics.length);
   const diffCount = useSemanticDiffStore((s) => s.diff.entries.length);
+
+  useEffect(() => {
+    const reg = registerLiveBottomTabs();
+    return () => reg.detach();
+  }, []);
 
   return (
     <section
@@ -52,6 +67,7 @@ export function BottomPanel() {
               onClick={() => setTab(t.key)}
               aria-current={active}
               className={cn(
+                'mi-press mi-underline mi-focus-ring',
                 'group relative inline-flex h-9 items-center gap-1.5 px-3 text-sm text-ink-2 hover:text-ink-1',
                 active && 'text-ink-1 font-medium',
               )}
@@ -83,6 +99,9 @@ export function BottomPanel() {
           .with('output', () => <OutputTab />)
           .with('terminal', () => <TerminalTab />)
           .with('runner', () => <RunnerOutputPanel />)
+          .with('live-events', () => <LiveEventsTab />)
+          .with('cache-state', () => <CacheStateTab />)
+          .with('trace-graph', () => <TraceGraphTab />)
           .exhaustive()}
       </div>
     </section>

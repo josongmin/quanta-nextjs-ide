@@ -1,0 +1,43 @@
+{
+  "menu": {
+    "app": "Quanta",
+    "file": "文件",
+    "edit": "编辑",
+    "view": "视图",
+    "probe": "Probe",
+    "window": "窗口",
+    "help": "帮助",
+    "openFolder": "打开文件夹…",
+    "importTrace": "导入跟踪…",
+    "save": "保存",
+    "exportTrace": "导出跟踪…",
+    "settings": "设置…",
+    "commandPalette": "命令面板…",
+    "quickOpen": "快速打开…",
+    "toggleBottomPanel": "切换底部面板",
+    "toggleLeftPanel": "切换左侧面板",
+    "openRsc": "打开 RSC 负载分步",
+    "captureNow": "捕获最后跟踪",
+    "openAi": "打开 Quanta AI",
+    "openPlugins": "插件结果",
+    "openGit": "Git 状态",
+    "docs": "Quanta 文档",
+    "reportIssue": "报告问题…"
+  },
+  "tray": {
+    "show": "显示 Quanta",
+    "capture": "捕获最后路由",
+    "openRsc": "打开 RSC Probe…",
+    "openAi": "打开 Quanta AI…",
+    "quit": "退出 Quanta"
+  },
+  "update": {
+    "available": "Quanta {version} 已就绪",
+    "install": "安装 + 重启",
+    "installing": "安装中…"
+  },
+  "locale": {
+    "label": "语言",
+    "switchTo": "切换到 {name}"
+  }
+}

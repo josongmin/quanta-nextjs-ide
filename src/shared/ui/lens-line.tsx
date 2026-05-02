@@ -36,17 +36,23 @@ export function LensLine({
       onClick={onClick}
       style={indent ? { paddingLeft: indent } : undefined}
       className={cn(
-        'flex w-full items-center gap-2 px-2 py-0.5 font-mono text-[12px] text-ink-3 hover:text-ink-2',
+        'flex h-[26px] w-full items-center gap-2 px-2 py-0.5',
+        'font-mono text-[11.5px] tracking-tightish text-ink-3',
+        'transition-colors duration-moderate ease-swift-out',
+        'hover:text-ink-2 hover:bg-bg-hover/40',
+        'border-l-2 border-transparent hover:border-line',
         onClick && 'cursor-pointer',
         className,
       )}
     >
-      <Icon.ChevDown className="h-3 w-3 shrink-0 text-ink-3" />
-      <span className="text-caps text-ink-3">{kindLabels[kind]}</span>
-      {label ? <span className="font-sans text-ink-1">{label}</span> : null}
+      <Icon.ChevDown className="h-3 w-3 shrink-0 text-ink-3/70" />
+      <span className="text-caps text-ink-3 select-none">{kindLabels[kind]}</span>
+      {label ? (
+        <span className="truncate font-sans text-ink-1 tracking-tightish">{label}</span>
+      ) : null}
       {children}
       {trailing ? (
-        <span className="ml-auto flex items-center gap-1.5">{trailing}</span>
+        <span className="ml-auto flex shrink-0 items-center gap-1.5 pr-2">{trailing}</span>
       ) : null}
     </Comp>
   );

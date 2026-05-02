@@ -3,20 +3,29 @@ import { toast } from 'sonner';
 import { useUiStore } from '@entities/ui-shell';
 import { getGitStatus, type GitStatus } from '@entities/git';
 import { getWorkspaceRoot } from '@shared/runner';
+import { useT } from '@shared/i18n';
 import { Button, Chip, OverlayPanel, ScrollArea } from '@shared/ui';
 
-const STATUS_LABEL: Record<string, { label: string; tone: 'accent' | 'edge' | 'info' | 'muted' }> = {
-  M: { label: 'modified', tone: 'info' },
-  A: { label: 'added', tone: 'accent' },
-  D: { label: 'deleted', tone: 'edge' },
-  R: { label: 'renamed', tone: 'info' },
-  '?': { label: 'untracked', tone: 'muted' },
-  '!': { label: 'ignored', tone: 'muted' },
+const STATUS_TONE: Record<string, 'accent' | 'edge' | 'info' | 'muted'> = {
+  M: 'info',
+  A: 'accent',
+  D: 'edge',
+  R: 'info',
+  '?': 'muted',
+  '!': 'muted',
+};
+const STATUS_KEY: Record<string, string> = {
+  M: 'modified',
+  A: 'added',
+  D: 'deleted',
+  R: 'renamed',
+  '?': 'untracked',
+  '!': 'ignored',
 };
 
-function tone(code: string): { label: string; tone: 'accent' | 'edge' | 'info' | 'muted' } {
-  const key = code.trim().charAt(0);
-  return STATUS_LABEL[key] ?? { label: code.trim() || '·', tone: 'muted' };
+function statusTone(code: string): { tone: 'accent' | 'edge' | 'info' | 'muted'; key: string } {
+  const k = code.trim().charAt(0);
+  return { tone: STATUS_TONE[k] ?? 'muted', key: STATUS_KEY[k] ?? '' };
 }
 
 export function GitStatusOverlay() {
@@ -24,15 +33,16 @@ export function GitStatusOverlay() {
   const close = useUiStore((s) => s.closeOverlay);
   const [status, setStatus] = useState<GitStatus | null>(null);
   const [loading, setLoading] = useState(false);
+  const t = useT('git');
+  const tc = useT('common');
 
   const refresh = async () => {
     setLoading(true);
     try {
-      // Run git inside the user's open workspace, not the IDE's cwd.
       const cwd = getWorkspaceRoot() || undefined;
       setStatus(await getGitStatus(cwd));
     } catch (e) {
-      toast.error(`git failed: ${(e as Error).message}`);
+      toast.error(t('errors.gitFailed', { message: (e as Error).message }));
     } finally {
       setLoading(false);
     }
@@ -46,57 +56,55 @@ export function GitStatusOverlay() {
     <OverlayPanel
       open={!!open}
       onOpenChange={(o) => (o ? null : close('gitStatus'))}
-      title="Git status"
-      subtitle="via shell bridge"
+      title={t('title')}
+      subtitle={t('subtitle')}
       width={620}
       footer={
         <>
           <span className="mr-auto text-[11px] text-ink-3">
             {status?.available ? (
               <>
-                branch <span className="font-mono text-ink-1">{status.branch}</span>
+                {t('branch')} <span className="font-mono text-ink-1">{status.branch}</span>
                 {status.ahead || status.behind ? (
                   <>
                     {' · '}
-                    <Chip tone="accent" size="xs">↑{status.ahead}</Chip>
-                    <Chip tone="edge" size="xs">↓{status.behind}</Chip>
+                    <Chip tone="accent" size="xs">{t('ahead', { count: status.ahead })}</Chip>
+                    <Chip tone="edge" size="xs">{t('behind', { count: status.behind })}</Chip>
                   </>
                 ) : null}
               </>
             ) : (
-              <>shell unavailable — Tauri build needed</>
+              <>{t('shellUnavailable')}</>
             )}
           </span>
           <Button size="xs" tone="ghost" onClick={refresh} disabled={loading}>
-            Refresh
+            {tc('actions.refresh')}
           </Button>
         </>
       }
     >
       <ScrollArea className="h-[380px]">
         {!status ? (
-          <div className="px-3 py-6 text-center text-xs text-ink-3">Loading…</div>
+          <div className="px-3 py-6 text-center text-xs text-ink-3">{t('loading')}</div>
         ) : !status.available ? (
           <div className="space-y-2 px-3 py-3 text-xs text-ink-3">
             <div className="font-mono text-ink-2">{status.reason}</div>
-            <div>
-              In a browser the IDE has no shell access. The Tauri build (Phase
-              14b) injects a shell bridge that runs <span className="font-mono">git status</span>{' '}
-              against the open project.
-            </div>
+            <div>{t('shellUnavailableLong')}</div>
           </div>
         ) : status.files.length === 0 ? (
           <div className="px-3 py-6 text-center text-xs text-ink-3">
-            Working tree clean — nothing to commit.
+            {t('clean')}
           </div>
         ) : (
           <div className="divide-y divide-line/70">
             {status.files.map((f) => {
-              const t = tone(f.status);
+              const st = statusTone(f.status);
               return (
                 <div key={f.path} className="flex items-center gap-2 px-3 py-1 text-xs">
                   <span className="w-12 font-mono text-[10px] text-ink-3">{f.status}</span>
-                  <Chip tone={t.tone} size="xs">{t.label}</Chip>
+                  <Chip tone={st.tone} size="xs">
+                    {st.key ? t(`status.${st.key}`) : f.status.trim() || '·'}
+                  </Chip>
                   <span className="flex-1 truncate font-mono text-ink-1" title={f.path}>
                     {f.path}
                   </span>

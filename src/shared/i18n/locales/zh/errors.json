@@ -1,0 +1,14 @@
+{
+  "generic": "出错了: {message}",
+  "noUrl": "请输入 URL",
+  "noChunksToCapture": "尚无可捕获的块",
+  "nothingToExport": "无内容可导出 — 请先获取路由",
+  "importFailed": "导入失败: {reason}",
+  "noRoutes": "未提供路由",
+  "noActiveFile": "无活动文件可保存",
+  "saveFailed": "保存失败: {message}",
+  "fetchFailed": "获取失败: {status} {statusText}",
+  "noBody": "无响应体",
+  "tauriRequired": "需要 Tauri 构建",
+  "shellUnavailable": "浏览器中 shell 不可用。请在 Tauri 构建中打开。"
+}

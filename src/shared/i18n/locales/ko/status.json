@@ -1,0 +1,16 @@
+{
+  "noFile": "파일 없음",
+  "noRisks": "위험 없음",
+  "problemsForFile": "이 파일의 문제",
+  "quickFix": "빠른 수정",
+  "commandPalette": "명령 팔레트",
+  "openAi": "Quanta AI 열기",
+  "ai": "AI",
+  "probe": "프로브",
+  "probeIdle": "대기",
+  "probeTitleIdle": "Quanta Probe: 아직 RSC 추적 없음 — 클릭해서 캡처",
+  "probeTitleActive": "Quanta Probe: {url}에서 청크 {count}개 캡처됨",
+  "probeWhatIs": "Quanta Probe란?",
+  "client": "클라이언트 {kb}KB",
+  "tags": "태그: {list}"
+}
