@@ -2,18 +2,18 @@
 
 # Quanta Next.js IDE
 
-An IDE interface for exploring Next.js development workflows and diagnostics. The application shell itself uses Vite, React, and TypeScript; Next.js execution and inspection are separate integration paths.
+<p align="center"><a href="#engineering-highlights">Engineering</a> · <a href="#architecture-at-a-glance">Architecture</a> · <a href="#run-locally">Get started</a> · <a href="#documentation">Reference</a></p>
 
+An IDE interface for exploring Next.js development workflows and diagnostics. The application shell itself uses Vite, React, and TypeScript; Next.js execution and inspection are separate integration paths.
 
 ## Engineering highlights
 
-| Mechanism | Engineering purpose |
-| :--- | :--- |
-| **Route-aware analysis** | Analyzer registration, route-tree construction, and an analyzer bus connect project structure to UI diagnostics. |
-| **Editor and workspace boundary** | Monaco setup, save handling, workspace-root propagation, and native integration are separate modules. |
-| **Feature-sliced UI** | Features, widgets, entities, and shared adapters separate presentation from reusable analysis and host concerns. |
-| **Separate realism tiers** | Browser fixtures, native workspace access, and real Next.js end-to-end tests are distinct execution paths. |
-
+| Mechanism | Engineering purpose | Source |
+| :--- | :--- | :--- |
+| **Route-aware analysis** | Analyzer registration, route-tree construction, and an analyzer bus connect project structure to UI diagnostics. | [Route analyzer](src/shared/analyzer/routes.ts) |
+| **Editor and workspace boundary** | Monaco setup, save handling, workspace-root propagation, and native integration are separate modules. | [Composition](src/app/App.tsx) |
+| **Feature-sliced UI** | Features, widgets, entities, and shared adapters separate presentation from reusable analysis and host concerns. | [Feature slices](src/features/) |
+| **Separate realism tiers** | Browser fixtures, native workspace access, and real Next.js end-to-end tests are distinct execution paths. | [E2E fixtures](e2e/) |
 
 ## Architecture at a glance
 
@@ -81,3 +81,5 @@ Mock findings, masked credentials, and sample diagnostics support UI development
 - [Domain architecture](docs/AUDIT-DOMAIN.md)
 - [Layer review](docs/AUDIT-FSD.md)
 - [Script reference](package.json)
+
+<p align="center"><sub><a href="https://github.com/josongmin">Project map</a> · <a href="#engineering-highlights">Back to overview</a></sub></p>
