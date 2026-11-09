@@ -1,6 +1,30 @@
+<p align="center"><img src="readme-banner.svg" alt="Quanta Next.js IDE — A route-aware workbench with browser and native workspace paths." width="100%"></p>
+
 # Quanta Next.js IDE
 
 An IDE interface for exploring Next.js development workflows and diagnostics. The application shell itself uses Vite, React, and TypeScript; Next.js execution and inspection are separate integration paths.
+
+
+## Engineering highlights
+
+| Mechanism | Engineering purpose |
+| :--- | :--- |
+| **Route-aware analysis** | Analyzer registration, route-tree construction, and an analyzer bus connect project structure to UI diagnostics. |
+| **Editor and workspace boundary** | Monaco setup, save handling, workspace-root propagation, and native integration are separate modules. |
+| **Feature-sliced UI** | Features, widgets, entities, and shared adapters separate presentation from reusable analysis and host concerns. |
+| **Separate realism tiers** | Browser fixtures, native workspace access, and real Next.js end-to-end tests are distinct execution paths. |
+
+
+## Architecture at a glance
+
+```mermaid
+flowchart TB
+    A["Application router and workspace"] --> E["Monaco editor and features"]
+    A --> B["Analyzer bus"]
+    B --> R["Route tree and diagnostics"]
+    E --> S["Shared LSP / AI / native adapters"]
+    S --> H["Browser fixtures or Tauri host"]
+```
 
 ## What it does
 
